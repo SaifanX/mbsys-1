@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Moon, Sun, Lock } from 'lucide-react';
+import { Menu, X, Phone, Moon, Sun, Lock, Calendar } from 'lucide-react';
 import MbsysLogo from './MbsysLogo';
 
 interface NavbarProps {
@@ -96,7 +96,15 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
               }
             </button>
 
-            <div className={`flex items-center gap-4 pl-6 border-l transition-colors duration-500 ${scrolled ? 'border-slate-200 dark:border-slate-700' : 'border-slate-300/40 dark:border-slate-700/50'}`}>
+            <div className={`flex items-center gap-3 pl-6 border-l transition-colors duration-500 ${scrolled ? 'border-slate-200 dark:border-slate-700' : 'border-slate-300/40 dark:border-slate-700/50'}`}>
+               <a 
+                 href="https://cal.id/mbsys" 
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-secondary transition-colors text-[10px] font-tech font-bold uppercase tracking-widest px-3"
+               >
+                 <Calendar size={14} /> Sync Calendar
+               </a>
                <a 
                  href="tel:+919886374122" 
                  className="flex items-center gap-3 px-5 py-2.5 bg-primary text-white rounded-full font-tech font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-red-500/20 hover:scale-105 active:scale-95 transition-all group"
@@ -162,7 +170,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
               ))}
             </div>
 
-            <div className="mt-20 pt-12 border-t border-slate-100 dark:border-slate-800/50 space-y-10">
+            <div className="mt-20 pt-12 border-t border-slate-100 dark:border-slate-800/50 space-y-8">
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                   <Lock size={14} />
@@ -171,12 +179,22 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
                 <p className="font-tech font-bold text-2xl text-slate-900 dark:text-white">+91 988-6374-122</p>
               </div>
               
-              <a 
-                href="tel:+919886374122" 
-                className="flex items-center justify-center gap-3 w-full py-5 bg-primary text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-lg shadow-red-500/20 active:scale-[0.98] transition-all"
-              >
-                <Phone size={18} /> Establish Voice Link
-              </a>
+              <div className="flex flex-col gap-4">
+                <a 
+                  href="tel:+919886374122" 
+                  className="flex items-center justify-center gap-3 w-full py-5 bg-primary text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-lg shadow-red-500/20 active:scale-[0.98] transition-all"
+                >
+                  <Phone size={18} /> Establish Voice Link
+                </a>
+                <a 
+                  href="https://cal.id/mbsys" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 w-full py-5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-md active:scale-[0.98] transition-all"
+                >
+                  <Calendar size={18} /> Book Technical Audit
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Mail, Loader2, Lock, AlertCircle, CheckCircle2, Star, ExternalLink, Fingerprint, UserPlus } from 'lucide-react';
+import { MapPin, Mail, Loader2, Lock, AlertCircle, CheckCircle2, Star, ExternalLink, Fingerprint, UserPlus, Calendar, ArrowRight } from 'lucide-react';
 import MbsysLogo from '../components/MbsysLogo';
 
 interface ContactProps {
@@ -115,6 +115,28 @@ END:VCARD`;
   return (
     <div className="pt-32 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Fast Track Booking Bar */}
+        <div className="mb-16 p-6 md:p-8 bg-gradient-to-r from-secondary/10 to-primary/10 border border-slate-200 dark:border-white/5 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-8 group">
+          <div className="flex items-center gap-6">
+            <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-lg border border-slate-100 dark:border-slate-700">
+               <Calendar className="text-secondary animate-pulse" size={24} />
+            </div>
+            <div>
+              <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white">Fast Track Protocol</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Skip the form. Book a technical sync directly into our field grid.</p>
+            </div>
+          </div>
+          <a 
+            href="https://cal.id/mbsys" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-full md:w-auto px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-tech font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-105 transition-all shadow-xl active:scale-95"
+          >
+            Launch Scheduler <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
+          </a>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 mb-20">
           <div className="animate-in slide-in-from-left-4 duration-1000">
             <span className="text-primary font-tech font-bold tracking-[0.3em] uppercase text-xs mb-4 block">COMMS INTERFACE</span>

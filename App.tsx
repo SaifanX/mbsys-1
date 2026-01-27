@@ -59,56 +59,56 @@ function App() {
 
   const services: Service[] = [
     { 
-      id: 'infra', 
-      title: 'High-Scale Infrastructure', 
-      description: 'Tier-3 data center design and resilient hardware ecosystems.', 
-      longDescription: 'Our infrastructure designs are optimized for maximum uptime and heat management. We architect high-density server environments that scale with your data requirements.',
-      features: ['Precision Server Rack Cooling', 'UPS Redundancy Systems', 'Active/Active Virtualization', 'SAN Storage Architecture'],
+      id: 'infra-amc', 
+      title: 'IT Infrastructure & AMC', 
+      description: 'Design, implementation, and maintenance of mission-critical IT ecosystems.', 
+      longDescription: 'We design, implement, and maintain complete IT infrastructure for offices and businesses. Our AMC services cover system monitoring, troubleshooting, upgrades, and on-call support to ensure uninterrupted operations.',
+      features: ['Full Stack Infrastructure Design', 'Annual Maintenance Contracts (AMC)', 'Proactive System Monitoring', 'Strategic Troubleshooting & Upgrades'],
       icon: Server, 
       image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2000&auto=format&fit=crop' 
     },
     { 
-      id: 'cctv', 
-      title: 'Advanced Surveillance', 
-      description: 'Unified IP vision grids with high-retention secure archival.', 
-      longDescription: 'Professional grade CCTV solutions with edge analytics for perimeter integrity and motion-triggered secure recording.',
-      features: ['LPR (License Plate) Recognition', 'Motion Boundary Triggers', 'Ultra Low-Light Sensors', 'Remote Viewing Gateway'],
+      id: 'cctv-surveillance', 
+      title: 'CCTV Installation & Maintenance', 
+      description: 'End-to-end IP vision solutions for reliable surveillance and security.', 
+      longDescription: 'End-to-end CCTV solutions including site assessment, camera selection, installation, configuration, and regular maintenance to ensure reliable surveillance and security.',
+      features: ['Expert Site Assessment', 'Custom Camera Selection', 'Precision Configuration', 'Dedicated Maintenance Support'],
       icon: Video, 
       image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000&auto=format&fit=crop' 
     },
     { 
-      id: 'network', 
-      title: 'Unified Networking', 
-      description: 'Zero-latency Wi-Fi 7 and fiber-optic backbone deployments.', 
-      longDescription: 'We deploy robust local area networks that eliminate bottlenecks and provide secure, seamless roaming across your entire facility.',
-      features: ['Fiber Optic Splicing', 'Managed Switching Grids', 'High-Density Wi-Fi 7', 'VLAN Segmenting'],
+      id: 'networking-wifi', 
+      title: 'Networking & Wi-Fi Solutions', 
+      description: 'High-performance structured cabling and scalable wireless connectivity.', 
+      longDescription: 'We design and deploy structured cabling, LAN, and high-performance Wi-Fi networks that deliver stable, secure, and scalable connectivity for offices, commercial spaces, and homes.',
+      features: ['Structured Cabling & LAN', 'High-Performance Wi-Fi Networks', 'Secure Scalable Connectivity', 'Commercial & Residential Solutions'],
       icon: Wifi, 
       image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2000&auto=format&fit=crop' 
     },
     { 
-      id: 'firewall', 
-      title: 'Network Perimeter Defense', 
-      description: 'Next-generation firewalls and deep packet inspection grids.', 
-      longDescription: 'Protecting your internal nodes with hardware-level security that filters malicious traffic before it hits your servers.',
-      features: ['Next-Gen UTM Firewalls', 'Intrusion Detection (IDS)', 'VPN Tunneling Protocols', 'Bandwidth Management'],
+      id: 'security-firewall', 
+      title: 'Firewall & Security Systems', 
+      description: 'Advanced perimeter defense to protect data from unauthorized access.', 
+      longDescription: 'Advanced firewall deployment and network security solutions to protect your data, systems, and users from cyber threats and unauthorized access.',
+      features: ['Next-Gen Firewall Deployment', 'Network Security Hardening', 'Cyber Threat Mitigation', 'User Access Control'],
       icon: Shield, 
       image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop' 
     },
     { 
-      id: 'automation', 
-      title: 'IoT Facility Control', 
-      description: 'Occupancy-based environmentals and smart access integration.', 
-      longDescription: 'Integrating facility management into a single dashboard. Control lighting, HVAC, and access points based on real-time sensor data.',
-      features: ['Biometric Access Points', 'Smart DALI Lighting', 'HVAC Integration', 'Energy Efficiency Grid'],
+      id: 'home-automation', 
+      title: 'Home Automation Solutions', 
+      description: 'Intelligent integration of lighting, security, and smart access control.', 
+      longDescription: 'Our home automation solutions integrate lighting, security, access control, and smart devices into a single intelligent system, providing enhanced comfort, safety, and energy efficiency.',
+      features: ['Unified Smart System Integration', 'Automated Lighting & Access', 'Enhanced Safety Protocols', 'Energy Efficient Ecosystems'],
       icon: HomeIcon, 
       image: 'https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=2000&auto=format&fit=crop' 
     },
     { 
-      id: 'interiors', 
-      title: 'Technical Interior Integration', 
-      description: 'Architectural space planning with embedded hidden tech grids.', 
-      longDescription: 'We bridge the gap between aesthetics and function. Invisible cabling and technical furniture that fits modern architectural standards.',
-      features: ['Hidden Cable Pathways', 'Custom Technical Rack Furniture', 'Acoustic Panel Tech Integration', 'Modular Workspaces'],
+      id: 'interiors-renovation', 
+      title: 'Interiors & Office Renovation', 
+      description: 'Future-ready workspaces with integrated technical infrastructure.', 
+      longDescription: 'We deliver functional office interiors and renovation solutions aligned with modern workspaces, seamlessly integrating IT, networking, and security infrastructure for a clean and future-ready environment.',
+      features: ['Functional Office Space Planning', 'Modern Turnkey Renovation', 'Integrated Tech Pathways', 'Seamless Infrastructure Merging'],
       icon: PenTool, 
       image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop' 
     }
@@ -134,7 +134,7 @@ function App() {
     <div className="min-h-screen relative bg-background-light dark:bg-background-dark transition-colors duration-500 selection:bg-secondary/30">
       <CursorTrail darkMode={darkMode} />
       
-      {/* Scroll Progress Bar (Micro-interaction) */}
+      {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-1 z-[200] pointer-events-none">
         <div 
           className="h-full bg-primary shadow-[0_0_10px_#EF4444] transition-all duration-150 ease-out"
@@ -142,7 +142,7 @@ function App() {
         />
       </div>
 
-      {/* Floating Tactical Comms Hub (Functional Feature) */}
+      {/* Floating Tactical Comms Hub */}
       <QuickActionHub />
 
       {/* Scroll to Top Button */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Zap, CheckCircle, Activity, Globe, ExternalLink, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Zap, CheckCircle, Activity, Globe, ExternalLink, ShieldCheck, Calendar } from 'lucide-react';
 import Counter from '../components/Counter';
 import XRaySlider from '../components/XRaySlider';
 import MbsysLogo from '../components/MbsysLogo';
@@ -58,19 +58,21 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
               
               <div className="flex flex-wrap gap-4 pt-4">
                 <a 
-                  href="#services" 
-                  onClick={(e) => handleLinkClick(e, '#services')}
+                  href="https://cal.id/mbsys" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative px-8 py-4 bg-primary text-white font-bold uppercase tracking-widest text-sm rounded-sm overflow-hidden shadow-lg shadow-red-500/20 active:scale-95 transition-transform"
                 >
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
-                  <span className="relative flex items-center gap-2">Explore Services <ArrowRight size={16} /></span>
+                  <span className="relative flex items-center gap-2"><Calendar size={18} /> Book Technical Audit</span>
                 </a>
-                <button 
-                  onClick={(e) => handleLinkClick(e, '#about')}
-                  className="px-8 py-4 bg-white dark:bg-transparent border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold uppercase tracking-widest text-sm rounded-sm hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-95 transition-all"
+                <a 
+                  href="#services" 
+                  onClick={(e) => handleLinkClick(e, '#services')}
+                  className="px-8 py-4 bg-white dark:bg-transparent border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold uppercase tracking-widest text-sm rounded-sm hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-95 transition-all flex items-center gap-2"
                 >
-                  About MBSYS
-                </button>
+                  Our Solutions <ArrowRight size={16} />
+                </a>
               </div>
             </div>
 

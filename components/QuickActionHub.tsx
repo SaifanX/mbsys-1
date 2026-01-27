@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, MessageSquare, MapPin, Plus, X, ArrowRight } from 'lucide-react';
+import { Phone, MessageSquare, MapPin, Plus, X, Calendar } from 'lucide-react';
 
 const QuickActionHub: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +11,13 @@ const QuickActionHub: React.FC = () => {
       href: 'tel:+919886374122',
       color: 'bg-primary',
       description: 'Instant Support'
+    },
+    {
+      icon: Calendar,
+      label: 'Sync Audit',
+      href: 'https://cal.id/mbsys',
+      color: 'bg-slate-900 dark:bg-white dark:text-slate-900',
+      description: 'Book Online'
     },
     {
       icon: MessageSquare,
@@ -53,7 +60,7 @@ const QuickActionHub: React.FC = () => {
       {/* Main Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 ${isOpen ? 'bg-slate-900 dark:bg-white dark:text-slate-900 rotate-0' : 'bg-primary rotate-0'}`}
+        className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 ${isOpen ? 'bg-slate-900 dark:bg-white dark:text-slate-900 rotate-0' : 'bg-primary rotate-0 shadow-[0_0_20px_rgba(239,68,68,0.5)]'}`}
       >
         {isOpen ? <X size={24} /> : <Plus size={24} className="animate-pulse" />}
         {!isOpen && (
