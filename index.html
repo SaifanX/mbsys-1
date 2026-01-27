@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MBSYS - Professional Infrastructure Solutions</title>
+    <meta name="description" content="MBSYS - Connecting dots between architectural vision and technical reality. High-performance IT infrastructure, surveillance, and IoT in Bengaluru." />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MBSYS - Professional Infrastructure Solutions">
+    <meta property="og:description" content="Connecting dots between architectural vision and technical reality in Bengaluru.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=1200">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: "#EF4444",
+              secondary: "#06B6D4",
+              "background-dark": "#0B1120",
+              "background-light": "#F8FAFC",
+              "surface-dark": "#111827",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Space Grotesk", "sans-serif"],
+              tech: ["Rajdhani", "sans-serif"],
+            },
+            animation: {
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'scan': 'scan 4s linear infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'logo-pulse': 'logo-pulse 2.5s ease-in-out infinite',
+            },
+            keyframes: {
+              scan: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              'logo-pulse': {
+                '0%, 100%': { opacity: '1', transform: 'scale(1)', filter: 'drop-shadow(0 0 2px rgba(239, 68, 68, 0.5))' },
+                '50%': { opacity: '0.4', transform: 'scale(0.85)', filter: 'drop-shadow(0 0 0px rgba(239, 68, 68, 0))' },
+              }
+            }
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      .dark .glass-panel {
+        background: rgba(17, 24, 39, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .tech-grid {
+        background-size: 40px 40px;
+        background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);
+      }
+      .dark .tech-grid {
+        background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      }
+      * {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      .animation-delay-100 { animation-delay: 100ms; }
+      .animation-delay-200 { animation-delay: 200ms; }
+      .animation-delay-300 { animation-delay: 300ms; }
+      .animation-delay-400 { animation-delay: 400ms; }
+      .animation-delay-500 { animation-delay: 500ms; }
+      .animation-delay-700 { animation-delay: 700ms; }
+      
+      body {
+        background-color: #F8FAFC;
+        color: #0F172A;
+      }
+      .dark body {
+        background-color: #0B1120;
+        color: #F1F5F9;
+      }
+      
+      /* Smooth custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(100, 116, 139, 0.3);
+        border-radius: 10px;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.1);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.5);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-background-light dark:bg-background-dark font-sans antialiased selection:bg-secondary/30 selection:text-secondary overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
