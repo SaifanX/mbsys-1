@@ -156,7 +156,7 @@ function App() {
 
       <Navbar darkMode={darkMode} onToggleTheme={handleToggleTheme} onNavigate={navigate} currentPath={currentPath} />
 
-      <main className="relative z-10 min-h-screen">
+      <main className="relative min-h-screen">
         {renderContent()}
       </main>
 

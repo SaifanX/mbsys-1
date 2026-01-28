@@ -6,6 +6,8 @@ interface Point {
   age: number;
   color: string;
   size: number;
+  vx: number;
+  vy: number;
 }
 
 interface CursorTrailProps {
@@ -24,10 +26,9 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Adjust colors based on theme
     const colors = darkMode 
-      ? ['#EF4444', '#06B6D4'] // Neon Red, Cyan for Dark Mode
-      : ['#DC2626', '#0891B2']; // Darker Red, Darker Cyan for Light Mode
+      ? ['#EF4444', '#06B6D4', '#ffffff', '#FACC15'] 
+      : ['#EF4444', '#0891B2', '#1E293B', '#EF4444'];
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -37,23 +38,42 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
       
-      // Add a few points for density
-      for (let i = 0; i < 2; i++) {
+      // Increased density for prominent dust trail
+      for (let i = 0; i < 6; i++) {
         pointsRef.current.push({
-          x: e.clientX + (Math.random() - 0.5) * 5,
-          y: e.clientY + (Math.random() - 0.5) * 5,
+          x: e.clientX,
+          y: e.clientY,
+          vx: (Math.random() - 0.5) * 2.5,
+          vy: (Math.random() - 0.5) * 2.5,
           age: 0,
           color: colors[Math.floor(Math.random() * colors.length)],
-          size: Math.random() * 3 + 1,
+          size: Math.random() * 5 + 2,
+        });
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      mouseRef.current = { x: touch.clientX, y: touch.clientY };
+      for (let i = 0; i < 4; i++) {
+        pointsRef.current.push({
+          x: touch.clientX,
+          y: touch.clientY,
+          vx: (Math.random() - 0.5) * 3.5,
+          vy: (Math.random() - 0.5) * 3.5,
+          age: 0,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 6 + 3,
         });
       }
     };
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     handleResize();
 
-    const maxAge = 40;
+    const maxAge = 80; // Extended lifetime for persistence
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -62,15 +82,23 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
         p.age += 1;
         if (p.age > maxAge) return false;
 
-        const opacity = 1 - p.age / maxAge;
+        const opacity = Math.pow(1 - p.age / maxAge, 1.5);
         ctx.globalAlpha = opacity;
+        
+        // Intense Plasma Glow
+        ctx.shadowBlur = p.age < 15 ? 20 : 8;
+        ctx.shadowColor = p.color;
+        
         ctx.fillStyle = p.color;
         
-        // Slight movement to give it a "floaty" comet feel
-        p.x += (Math.random() - 0.5) * 0.5;
-        p.y += (Math.random() - 0.5) * 0.5;
+        // Newtonian Drift
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.97;
+        p.vy *= 0.97;
 
         ctx.beginPath();
+        // Slightly varying radius for organic look
         ctx.arc(p.x, p.y, p.size * opacity, 0, Math.PI * 2);
         ctx.fill();
 
@@ -85,15 +113,16 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
       cancelAnimationFrame(animationId);
     };
-  }, [darkMode]); // Re-run effect when theme changes to update colors
+  }, [darkMode]);
 
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-[9999]"
-      style={{ mixBlendMode: darkMode ? 'screen' : 'normal' }}
+      style={{ mixBlendMode: darkMode ? 'screen' : 'multiply' }}
     />
   );
 };

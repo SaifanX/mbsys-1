@@ -29,7 +29,6 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Prevent body scroll when drawer is open
   useEffect(() => {
     if (isDrawerOpen) {
       document.body.style.overflow = 'hidden';
@@ -61,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
               : 'mt-0 px-2 py-8 w-full bg-transparent border-transparent shadow-none'
             }`}
         >
-          <a href="#" onClick={(e) => handleLinkClick(e, '#')} className="flex items-center gap-3 group">
+          <a href="#" onClick={(e) => handleLinkClick(e, '#')} className="flex items-center gap-3 group active:scale-95 transition-transform">
             <MbsysLogo className={`transition-all duration-500 ${scrolled ? 'h-7 md:h-8' : 'h-10 md:h-12'}`} />
           </a>
 
@@ -72,14 +71,15 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className={`text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative group py-2 ${
+                className={`text-[11px] font-bold uppercase tracking-[0.25em] transition-all relative group py-2 h-full flex flex-col justify-center ${
                   currentPath === link.href 
                     ? 'text-primary' 
                     : 'text-slate-600 dark:text-slate-300'
-                } hover:text-primary`}
+                } hover:text-primary active:scale-95`}
               >
                 {link.name}
-                <span className={`absolute bottom-0 left-0 h-[1px] bg-primary transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-left ${currentPath === link.href ? 'w-full scale-x-100' : 'w-full scale-x-0 group-hover:scale-x-100'}`}></span>
+                {/* Emerging Line Effect */}
+                <span className={`absolute bottom-0 left-0 h-[1.5px] bg-primary transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${currentPath === link.href ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'}`}></span>
               </a>
             ))}
             
@@ -101,7 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
                  href="https://cal.id/mbsys" 
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-secondary transition-colors text-[10px] font-tech font-bold uppercase tracking-widest px-3"
+                 className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-secondary transition-colors text-[10px] font-tech font-bold uppercase tracking-widest px-3 active:scale-95"
                >
                  <Calendar size={14} /> Sync Calendar
                </a>
@@ -118,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
           <div className="md:hidden flex items-center gap-3">
             <button 
               onClick={onToggleTheme} 
-              className={`p-2 rounded-full transition-colors ${scrolled ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-200/50 dark:bg-white/10'} text-slate-600 dark:text-slate-300`}
+              className={`p-2 rounded-full transition-colors ${scrolled ? 'bg-slate-100 dark:bg-slate-800' : 'bg-slate-200/50 dark:bg-white/10'} text-slate-600 dark:text-slate-300 active:scale-90`}
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
@@ -132,49 +132,50 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
         </div>
       </nav>
 
-      {/* Side Drawer Backdrop */}
+      {/* Side Drawer Backdrop - Smooth Fade */}
       <div 
-        className={`fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[150] transition-all duration-500 md:hidden ${isDrawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[150] transition-opacity duration-500 md:hidden ${isDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsDrawerOpen(false)}
       />
 
-      {/* Side Drawer Menu */}
+      {/* Side Drawer Menu - Spring Easing & Entry Transitions */}
       <div 
-        className={`fixed top-0 right-0 bottom-0 w-[85%] max-w-xs bg-white dark:bg-background-dark z-[160] shadow-[0_0_40px_rgba(0,0,0,0.2)] dark:shadow-[0_0_40px_rgba(0,0,0,0.6)] transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] md:hidden ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 bottom-0 w-[85%] max-w-xs bg-white dark:bg-background-dark z-[160] shadow-[0_0_80px_rgba(0,0,0,0.5)] transition-transform duration-[600ms] ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800/50">
             <MbsysLogo className="h-7" />
             <button 
               onClick={() => setIsDrawerOpen(false)} 
-              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors active:scale-75"
             >
               <X size={24} />
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto py-12 px-8">
-            <div className="flex flex-col space-y-10">
-              {navLinks.map((link) => (
+            <div className="flex flex-col space-y-8">
+              {navLinks.map((link, idx) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`text-4xl font-display font-bold uppercase tracking-tight transition-all duration-300 group relative w-fit ${
+                  style={{ transitionDelay: `${isDrawerOpen ? 150 + idx * 50 : 0}ms` }}
+                  className={`text-4xl font-display font-bold uppercase tracking-tight transition-all duration-700 group relative w-fit ${
                     currentPath === link.href ? 'text-primary' : 'text-slate-900 dark:text-slate-100'
-                  }`}
+                  } ${isDrawerOpen ? 'translate-x-0 opacity-100' : 'translate-x-12 opacity-0'}`}
                 >
                   {link.name}
-                  <span className={`absolute -bottom-1 left-0 h-[2px] bg-primary transition-all duration-500 ease-out origin-left ${currentPath === link.href ? 'w-full scale-x-100' : 'w-0 scale-x-0 group-hover:w-full group-hover:scale-x-100'}`}></span>
+                  <span className={`absolute -bottom-1 left-0 h-[3px] bg-primary transition-all duration-500 ease-out origin-left ${currentPath === link.href ? 'w-full' : 'w-0'}`}></span>
                 </a>
               ))}
             </div>
 
-            <div className="mt-20 pt-12 border-t border-slate-100 dark:border-slate-800/50 space-y-8">
+            <div className="mt-16 pt-12 border-t border-slate-100 dark:border-slate-800/50 space-y-8">
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                   <Lock size={14} />
-                  <span className="text-[10px] uppercase font-bold tracking-widest">Technical Support Grid</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest">Tactical Protocol Line</span>
                 </div>
                 <p className="font-tech font-bold text-2xl text-slate-900 dark:text-white">+91 988-6374-122</p>
               </div>
@@ -182,17 +183,17 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
               <div className="flex flex-col gap-4">
                 <a 
                   href="tel:+919886374122" 
-                  className="flex items-center justify-center gap-3 w-full py-5 bg-primary text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-lg shadow-red-500/20 active:scale-[0.98] transition-all"
+                  className="flex items-center justify-center gap-3 w-full py-5 bg-primary text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-lg shadow-red-500/20 active:scale-95 transition-all"
                 >
-                  <Phone size={18} /> Establish Voice Link
+                  <Phone size={18} /> Establish Link
                 </a>
                 <a 
                   href="https://cal.id/mbsys" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 w-full py-5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-md active:scale-[0.98] transition-all"
+                  className="flex items-center justify-center gap-3 w-full py-5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-md active:scale-95 transition-all"
                 >
-                  <Calendar size={18} /> Book Technical Audit
+                  <Calendar size={18} /> Sync Calendar
                 </a>
               </div>
             </div>
