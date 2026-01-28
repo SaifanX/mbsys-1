@@ -27,8 +27,8 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     if (!ctx) return;
 
     const colors = darkMode 
-      ? ['#EF4444', '#06B6D4', '#ffffff', '#FACC15'] 
-      : ['#EF4444', '#0891B2', '#1E293B', '#EF4444'];
+      ? ['#EF4444', '#06B6D4', '#ffffff'] 
+      : ['#EF4444', '#0891B2', '#1E293B'];
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -38,34 +38,30 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
       
-      // Increased density for prominent dust trail
-      for (let i = 0; i < 6; i++) {
-        pointsRef.current.push({
-          x: e.clientX,
-          y: e.clientY,
-          vx: (Math.random() - 0.5) * 2.5,
-          vy: (Math.random() - 0.5) * 2.5,
-          age: 0,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          size: Math.random() * 5 + 2,
-        });
-      }
+      // Minimalist density: 1 particle per move
+      pointsRef.current.push({
+        x: e.clientX,
+        y: e.clientY,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        age: 0,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: Math.random() * 2.5 + 1,
+      });
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       const touch = e.touches[0];
       mouseRef.current = { x: touch.clientX, y: touch.clientY };
-      for (let i = 0; i < 4; i++) {
-        pointsRef.current.push({
-          x: touch.clientX,
-          y: touch.clientY,
-          vx: (Math.random() - 0.5) * 3.5,
-          vy: (Math.random() - 0.5) * 3.5,
-          age: 0,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          size: Math.random() * 6 + 3,
-        });
-      }
+      pointsRef.current.push({
+        x: touch.clientX,
+        y: touch.clientY,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        age: 0,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: Math.random() * 3 + 1.5,
+      });
     };
 
     window.addEventListener('resize', handleResize);
@@ -73,7 +69,7 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     handleResize();
 
-    const maxAge = 80; // Extended lifetime for persistence
+    const maxAge = 35; // Short, clean trail
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -82,23 +78,18 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
         p.age += 1;
         if (p.age > maxAge) return false;
 
-        const opacity = Math.pow(1 - p.age / maxAge, 1.5);
+        const opacity = 1 - p.age / maxAge;
         ctx.globalAlpha = opacity;
-        
-        // Intense Plasma Glow
-        ctx.shadowBlur = p.age < 15 ? 20 : 8;
-        ctx.shadowColor = p.color;
         
         ctx.fillStyle = p.color;
         
-        // Newtonian Drift
+        // Slight drift
         p.x += p.vx;
         p.y += p.vy;
-        p.vx *= 0.97;
-        p.vy *= 0.97;
+        p.vx *= 0.95;
+        p.vy *= 0.95;
 
         ctx.beginPath();
-        // Slightly varying radius for organic look
         ctx.arc(p.x, p.y, p.size * opacity, 0, Math.PI * 2);
         ctx.fill();
 
@@ -122,7 +113,7 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-[9999]"
-      style={{ mixBlendMode: darkMode ? 'screen' : 'multiply' }}
+      style={{ mixBlendMode: 'screen' }}
     />
   );
 };

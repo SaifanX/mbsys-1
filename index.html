@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>MBSYS - Professional Infrastructure Solutions</title>
     <meta name="description" content="MBSYS - Connecting dots between architectural vision and technical reality. High-performance IT infrastructure, surveillance, and IoT in Bengaluru." />
     
@@ -41,6 +41,11 @@
               'scan': 'scan 4s linear infinite',
               'float': 'float 6s ease-in-out infinite',
               'logo-pulse': 'logo-pulse 2.5s ease-in-out infinite',
+              'fade-in-up': 'fade-in-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+              'fade-in-down': 'fade-in-down 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+              'modal-enter': 'modal-enter 0.7s cubic-bezier(0.32, 0.72, 0, 1) forwards',
+              'slide-in-top': 'slide-in-top-sm 0.3s ease-out forwards',
+              'fade-in': 'fade-in 0.5s ease-out forwards',
             },
             keyframes: {
               scan: {
@@ -54,6 +59,26 @@
               'logo-pulse': {
                 '0%, 100%': { opacity: '1', transform: 'scale(1)', filter: 'drop-shadow(0 0 2px rgba(239, 68, 68, 0.5))' },
                 '50%': { opacity: '0.4', transform: 'scale(0.85)', filter: 'drop-shadow(0 0 0px rgba(239, 68, 68, 0))' },
+              },
+              'fade-in-up': {
+                '0%': { opacity: '0', transform: 'translateY(40px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'fade-in-down': {
+                '0%': { opacity: '0', transform: 'translateY(-40px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'modal-enter': {
+                '0%': { opacity: '0', transform: 'scale(0.96) translateY(2rem)' },
+                '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+              },
+              'slide-in-top-sm': {
+                '0%': { opacity: '0', transform: 'translateY(-0.5rem)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'fade-in': {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
               }
             }
           },
@@ -63,6 +88,17 @@
     <style>
       html {
         scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+      body {
+        background-color: #F8FAFC;
+        color: #0F172A;
+        overflow-x: hidden;
+        width: 100%;
+      }
+      .dark body {
+        background-color: #0B1120;
+        color: #F1F5F9;
       }
       .glass-panel {
         background: rgba(255, 255, 255, 0.65);
@@ -83,28 +119,14 @@
         background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
                           linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
       }
-      * {
-        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-      }
-      .animation-delay-100 { animation-delay: 100ms; }
-      .animation-delay-200 { animation-delay: 200ms; }
-      .animation-delay-300 { animation-delay: 300ms; }
-      .animation-delay-400 { animation-delay: 400ms; }
-      .animation-delay-500 { animation-delay: 500ms; }
-      .animation-delay-700 { animation-delay: 700ms; }
       
-      body {
-        background-color: #F8FAFC;
-        color: #0F172A;
-      }
-      .dark body {
-        background-color: #0B1120;
-        color: #F1F5F9;
+      .reveal-hidden {
+        opacity: 0;
       }
       
       /* Smooth custom scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
       }
       ::-webkit-scrollbar-track {
         background: transparent;
@@ -119,6 +141,10 @@
       ::-webkit-scrollbar-thumb:hover {
         background: rgba(100, 116, 139, 0.5);
       }
+
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
     </style>
   <script type="importmap">
 {
@@ -132,7 +158,7 @@
 }
 </script>
 </head>
-  <body class="bg-background-light dark:bg-background-dark font-sans antialiased selection:bg-secondary/30 selection:text-secondary overflow-x-hidden">
+  <body class="bg-background-light dark:bg-background-dark font-sans antialiased selection:bg-secondary/30 selection:text-secondary">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

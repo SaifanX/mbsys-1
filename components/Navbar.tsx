@@ -134,7 +134,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
 
       {/* Side Drawer Backdrop - Smooth Fade */}
       <div 
-        className={`fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[150] transition-opacity duration-500 md:hidden ${isDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[150] transition-opacity duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden ${isDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsDrawerOpen(false)}
       />
 
