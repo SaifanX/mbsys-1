@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Terminal, ArrowRight, Cpu, Shield, Globe, Activity, Fingerprint, Rocket, Microscope, CheckCircle } from 'lucide-react';
+import React from 'react';
+import { Terminal, Cpu, Shield, Globe, Activity, Calendar, ArrowRight } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import { TimelineItem } from '../types';
 
@@ -78,8 +78,9 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
             <div className="absolute -inset-8 bg-gradient-to-tr from-primary/20 to-secondary/20 blur-3xl opacity-30 group-hover:opacity-70 transition-opacity"></div>
             <div className="relative aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-3xl transition-all duration-1000">
               <img 
-                src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000" 
                 alt="Tech Infrastructure" 
+                loading="lazy"
                 className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent flex items-end p-10 sm:p-14">
@@ -126,6 +127,33 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
             </div>
           </div>
         </div>
+
+        {/* Final Conversion CTA */}
+        <ScrollReveal className="mb-24 p-12 lg:p-24 bg-slate-900 dark:bg-slate-800/80 border border-slate-900 dark:border-white/10 text-white rounded-3xl overflow-hidden relative group">
+           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 blur-[120px] -mr-48 -mt-48 group-hover:bg-primary/30 transition-all"></div>
+           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 text-center lg:text-left">
+              <div className="space-y-6">
+                 <h2 className="text-4xl sm:text-6xl font-display font-bold leading-none tracking-tighter">Ready to Deploy?</h2>
+                 <p className="text-lg sm:text-xl opacity-70 font-sans max-w-xl leading-relaxed">Let's audit your current infrastructure and map the upgrade path to peak operational efficiency.</p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-6 shrink-0 w-full lg:w-auto">
+                 <a 
+                   href="https://cal.id/mbsys" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="px-12 py-6 bg-primary text-white font-tech font-bold uppercase tracking-[0.4em] rounded-xl shadow-2xl hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-4"
+                 >
+                   <Calendar size={20} /> Schedule Audit
+                 </a>
+                 <button 
+                   onClick={() => onNavigate('#contact')}
+                   className="px-12 py-6 border border-white/20 font-tech font-bold uppercase tracking-[0.4em] rounded-xl hover:bg-white/10 transition-all text-center flex items-center justify-center gap-4"
+                 >
+                   Contact Operations <ArrowRight size={20} />
+                 </button>
+              </div>
+           </div>
+        </ScrollReveal>
       </div>
     </div>
   );

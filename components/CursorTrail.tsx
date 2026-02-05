@@ -26,9 +26,10 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // More saturated colors for light mode to ensure they stand out
     const colors = darkMode 
       ? ['#EF4444', '#06B6D4', '#ffffff'] 
-      : ['#EF4444', '#0891B2', '#1E293B'];
+      : ['#DC2626', '#0891B2', '#0F172A'];
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -38,15 +39,14 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
       
-      // Minimalist density: 1 particle per move
       pointsRef.current.push({
         x: e.clientX,
         y: e.clientY,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: (Math.random() - 0.5) * 1.2,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
         age: 0,
         color: colors[Math.floor(Math.random() * colors.length)],
-        size: Math.random() * 2.5 + 1,
+        size: Math.random() * 3 + 1,
       });
     };
 
@@ -56,11 +56,11 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
       pointsRef.current.push({
         x: touch.clientX,
         y: touch.clientY,
-        vx: (Math.random() - 0.5) * 1.5,
-        vy: (Math.random() - 0.5) * 1.5,
+        vx: (Math.random() - 0.5) * 1.8,
+        vy: (Math.random() - 0.5) * 1.8,
         age: 0,
         color: colors[Math.floor(Math.random() * colors.length)],
-        size: Math.random() * 3 + 1.5,
+        size: Math.random() * 4 + 1.5,
       });
     };
 
@@ -69,7 +69,7 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     handleResize();
 
-    const maxAge = 35; // Short, clean trail
+    const maxAge = 40;
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -83,11 +83,10 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
         
         ctx.fillStyle = p.color;
         
-        // Slight drift
         p.x += p.vx;
         p.y += p.vy;
-        p.vx *= 0.95;
-        p.vy *= 0.95;
+        p.vx *= 0.96;
+        p.vy *= 0.96;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * opacity, 0, Math.PI * 2);
@@ -112,8 +111,8 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ darkMode }) => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[9999]"
-      style={{ mixBlendMode: 'screen' }}
+      className="fixed inset-0 pointer-events-none z-[9999] transition-opacity duration-300"
+      style={{ mixBlendMode: darkMode ? 'screen' : 'multiply' }}
     />
   );
 };

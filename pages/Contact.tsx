@@ -24,7 +24,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
     const newErrors: FormErrors = {};
     if (data.name.length < 3) newErrors.name = "ID must be at least 3 characters.";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) newErrors.email = "Invalid protocol frequency.";
+    if (!emailRegex.test(data.email)) newErrors.email = "Invalid email address.";
     if (data.message.length < 10) newErrors.message = "Parameters must be at least 10 characters.";
     return newErrors;
   };
@@ -47,7 +47,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
     }
     
     setStatus('submitting');
-    setResultMessage("Transmitting infrastructure request...");
+    setResultMessage("Sending message...");
 
     const form = e.currentTarget;
     const formSubmissionData = new FormData(form);
@@ -62,7 +62,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
       const data = await response.json();
       if (data.success) {
         setStatus('success');
-        setResultMessage("Handshake Successful. Sync confirmed.");
+        setResultMessage("Message sent successfully. We will contact you soon.");
         setFormData({ name: '', email: '', message: '' });
         setTouched({});
         setTimeout(() => {
@@ -71,11 +71,11 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
         }, 6000);
       } else {
         setStatus('error');
-        setResultMessage(data.message || "Protocol transmission failure.");
+        setResultMessage(data.message || "Failed to send message.");
       }
     } catch (error) {
       setStatus('error');
-      setResultMessage("Grid link connection failure.");
+      setResultMessage("Connection error. Please call us directly.");
     }
   };
 
@@ -148,7 +148,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
             <form onSubmit={handleSubmit} className="space-y-8 bg-white dark:bg-surface-dark p-8 sm:p-16 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-4xl relative">
               <div className="space-y-3 group">
                 <div className="flex justify-between items-center px-2">
-                  <label className="text-xs sm:text-sm font-tech font-black uppercase tracking-[0.4em] text-slate-500 group-focus-within:text-secondary transition-colors">Operator ID</label>
+                  <label className="text-xs sm:text-sm font-tech font-black uppercase tracking-[0.4em] text-slate-500 group-focus-within:text-secondary transition-colors">Name</label>
                   {touched.name && !errors.name && <CheckCircle2 size={16} className="text-green-500" />}
                 </div>
                 <input 
@@ -167,7 +167,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
 
               <div className="space-y-3 group">
                 <div className="flex justify-between items-center px-2">
-                  <label className="text-xs sm:text-sm font-tech font-black uppercase tracking-[0.4em] text-slate-500 group-focus-within:text-secondary transition-colors">Channel Frequency</label>
+                  <label className="text-xs sm:text-sm font-tech font-black uppercase tracking-[0.4em] text-slate-500 group-focus-within:text-secondary transition-colors">Email Address</label>
                   {touched.email && !errors.email && <CheckCircle2 size={16} className="text-green-500" />}
                 </div>
                 <input 
@@ -217,15 +217,15 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
                 >
                   {status === 'submitting' ? (
                     <>
-                      <Loader2 className="animate-spin" size={24} /> TRANSMITTING...
+                      <Loader2 className="animate-spin" size={24} /> SENDING...
                     </>
                   ) : status === 'success' ? (
                     <>
-                      <CheckCircle2 size={24} /> SYNC CONFIRMED
+                      <CheckCircle2 size={24} /> SENT
                     </>
                   ) : (
                     <>
-                      <Fingerprint size={24} className="group-hover/btn:animate-pulse" /> INITIALIZE SYNC
+                      <Fingerprint size={24} className="group-hover/btn:animate-pulse" /> SEND MESSAGE
                     </>
                   )}
                 </button>

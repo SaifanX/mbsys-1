@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, CheckCircle2, X, Calendar, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle2, X, Calendar, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import { Service } from '../types';
 
@@ -20,6 +20,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   onExpand 
 }) => {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [imgError, setImgError] = React.useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -33,6 +34,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       <div 
         ref={cardRef}
         onMouseMove={handleMouseMove}
+        itemScope 
+        itemType="https://schema.org/Service"
         className="group relative bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-sm overflow-hidden hover:shadow-[0_30px_60px_rgba(6,182,212,0.15)] transition-all duration-700 hover:border-secondary/30"
       >
         <div 
@@ -42,18 +45,37 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           }}
         />
 
-        <div className="h-56 sm:h-64 overflow-hidden relative">
-          <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
+        <div className="h-56 sm:h-64 overflow-hidden relative bg-slate-100 dark:bg-slate-900">
+          {!imgError ? (
+            <img 
+              itemProp="image"
+              src={service.image} 
+              alt={`${service.title} implementation by MBSYS`} 
+              onError={() => setImgError(true)}
+              className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" 
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-40 tech-grid">
+               <AlertCircle className="text-slate-400 mb-2" size={32} />
+               <span className="text-[10px] font-tech font-bold uppercase tracking-[0.2em] text-slate-500">Node_Asset_Offline</span>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
           <div className="absolute bottom-6 left-6 p-4 bg-secondary/20 backdrop-blur-md rounded-full border border-secondary/40">
             <service.icon className="text-white w-6 h-6 sm:w-8 sm:h-8" />
           </div>
         </div>
         <div className="p-8 sm:p-12 relative z-20">
-          <h3 className="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white mb-4 sm:mb-6 group-hover:text-secondary transition-colors leading-tight">
+          <h3 
+            itemProp="name"
+            className="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white mb-4 sm:mb-6 group-hover:text-secondary transition-colors leading-tight"
+          >
             {service.title}
           </h3>
-          <p className="text-slate-600 dark:text-slate-400 font-sans text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed opacity-90">
+          <p 
+            itemProp="description"
+            className="text-slate-600 dark:text-slate-400 font-sans text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed opacity-90"
+          >
             {service.description}
           </p>
           <button 
@@ -70,10 +92,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
 const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
   const [expandedService, setExpandedService] = useState<Service | null>(null);
+  const [isImgLoaded, setIsImgLoaded] = useState(false);
+  const [modalImgError, setModalImgError] = useState(false);
 
   useEffect(() => {
     if (expandedService) {
       document.body.style.overflow = 'hidden';
+      setIsImgLoaded(false);
+      setModalImgError(false);
     } else {
       document.body.style.overflow = 'auto';
     }
@@ -103,7 +129,6 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
         </div>
       </div>
 
-      {/* Expanded Details Overlay */}
       {expandedService && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8 lg:p-16">
           <div 
@@ -115,8 +140,11 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
             </div>
           </div>
           
-          <div className="relative w-full max-w-6xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl shadow-3xl overflow-hidden flex flex-col lg:flex-row animate-modal-enter max-h-[94vh] mt-12 lg:mt-0">
-            
+          <div 
+            itemScope 
+            itemType="https://schema.org/Service"
+            className="relative w-full max-w-6xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl shadow-3xl overflow-hidden flex flex-col lg:flex-row animate-modal-enter max-h-[94vh] mt-12 lg:mt-0"
+          >
             <button 
               onClick={() => setExpandedService(null)}
               className="absolute top-6 right-6 z-[10000] p-4 bg-primary text-white rounded-full transition-all border border-white/20 shadow-2xl active:scale-90 group hover:scale-110"
@@ -125,9 +153,32 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
               <X size={28} className="group-hover:rotate-90 transition-transform duration-300" />
             </button>
             
-            <div className="w-full lg:w-1/2 h-48 sm:h-80 lg:h-auto overflow-hidden relative shrink-0">
-              <img src={expandedService.image} alt={expandedService.title} className="w-full h-full object-cover" />
+            <div className="w-full lg:w-1/2 h-48 sm:h-80 lg:h-auto overflow-hidden relative shrink-0 bg-slate-100 dark:bg-slate-900">
+              {!isImgLoaded && !modalImgError && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader2 className="animate-spin text-secondary" size={32} />
+                </div>
+              )}
+              {!modalImgError ? (
+                <img 
+                  itemProp="image"
+                  src={expandedService.image} 
+                  alt={`${expandedService.title} detailed view`} 
+                  onLoad={() => setIsImgLoaded(true)}
+                  onError={() => {
+                    setModalImgError(true);
+                    setIsImgLoaded(true);
+                  }}
+                  className={`w-full h-full object-cover transition-opacity duration-700 ${isImgLoaded ? 'opacity-100' : 'opacity-0'}`} 
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 tech-grid">
+                  <AlertCircle className="text-secondary mb-4 opacity-30" size={64} />
+                  <p className="text-xs font-tech font-bold text-secondary uppercase tracking-widest opacity-40">Visual Sync Interface Offline</p>
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-white dark:from-surface-dark via-transparent to-transparent opacity-70"></div>
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20"></div>
               
               <div className="absolute top-6 left-6 flex items-center gap-3 px-5 py-2.5 bg-slate-900/85 backdrop-blur-md rounded-full border border-white/10">
                  <ShieldCheck size={18} className="text-secondary" />
@@ -141,10 +192,18 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
                   <expandedService.icon size={22} />
                   <span className="font-tech text-xs sm:text-sm uppercase font-bold tracking-[0.4em]">Protocol // Sync</span>
                 </div>
-                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-900 dark:text-white tracking-tighter leading-none">{expandedService.title}</h2>
+                <h2 
+                  itemProp="name"
+                  className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-900 dark:text-white tracking-tighter leading-none"
+                >
+                  {expandedService.title}
+                </h2>
               </div>
 
-              <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-light">
+              <p 
+                itemProp="description"
+                className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-light"
+              >
                 {expandedService.longDescription}
               </p>
 
@@ -169,23 +228,6 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
                 >
                   <Calendar size={22} /> Book Technical Audit
                 </a>
-                <div className="grid grid-cols-2 gap-4 sm:gap-6">
-                   <button 
-                    onClick={() => {
-                      setExpandedService(null);
-                      onNavigate('#contact');
-                    }}
-                    className="py-4 sm:py-5 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-tech font-bold uppercase tracking-[0.4em] text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all rounded-xl"
-                  >
-                    Manual Inquiry
-                  </button>
-                  <button 
-                    onClick={() => setExpandedService(null)}
-                    className="py-4 sm:py-5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-tech font-bold uppercase tracking-[0.4em] text-xs sm:text-sm hover:text-primary transition-all rounded-xl"
-                  >
-                    Close Protocol
-                  </button>
-                </div>
               </div>
             </div>
           </div>

@@ -109,7 +109,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
                  href="tel:+919886374122" 
                  className="flex items-center gap-3 px-5 py-2.5 bg-primary text-white rounded-full font-tech font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-red-500/20 hover:scale-105 active:scale-95 transition-all group"
                >
-                 <Phone size={14} className="group-hover:animate-bounce" /> Establish Link
+                 <Phone size={14} className="group-hover:animate-bounce" /> Call Now
                </a>
             </div>
           </div>
@@ -175,7 +175,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                   <Lock size={14} />
-                  <span className="text-[10px] uppercase font-bold tracking-widest">Tactical Protocol Line</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest">24/7 Support Line</span>
                 </div>
                 <p className="font-tech font-bold text-2xl text-slate-900 dark:text-white">+91 988-6374-122</p>
               </div>
@@ -185,7 +185,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
                   href="tel:+919886374122" 
                   className="flex items-center justify-center gap-3 w-full py-5 bg-primary text-white font-tech font-bold uppercase tracking-widest text-sm rounded-xl shadow-lg shadow-red-500/20 active:scale-95 transition-all"
                 >
-                  <Phone size={18} /> Establish Link
+                  <Phone size={18} /> Call Now
                 </a>
                 <a 
                   href="https://cal.id/mbsys" 

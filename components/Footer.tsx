@@ -93,7 +93,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Direct Comms Column */}
           <div className="lg:col-span-3 space-y-6">
             <h4 className="text-xs sm:text-sm font-tech font-black uppercase tracking-[0.3em] text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-4">
-              Comms Node
+              Contact Us
             </h4>
             <div className="space-y-5">
               <div className="flex gap-4">
@@ -101,7 +101,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   <Phone size={18} className="text-secondary" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-tech font-bold uppercase tracking-widest text-slate-400 mb-1">Voice Protocol</p>
+                  <p className="text-[10px] font-tech font-bold uppercase tracking-widest text-slate-400 mb-1">Phone</p>
                   <a href="tel:+919886374122" className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">+91 98863 74122</a>
                 </div>
               </div>
@@ -110,7 +110,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   <Mail size={18} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-tech font-bold uppercase tracking-widest text-slate-400 mb-1">Signal Channel</p>
+                  <p className="text-[10px] font-tech font-bold uppercase tracking-widest text-slate-400 mb-1">Email</p>
                   <a href="mailto:info@mbsys.co.in" className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">info@mbsys.co.in</a>
                 </div>
               </div>

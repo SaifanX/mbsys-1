@@ -13,7 +13,7 @@ import {
 import { Service, TimelineItem } from './types';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -61,11 +61,11 @@ function App() {
     { 
       id: 'infra-amc', 
       title: 'IT Infrastructure & AMC', 
-      description: 'Design, implementation, and maintenance of mission-critical IT ecosystems.', 
+      description: 'Design, implementation, and maintenance of mission-critical IT ecosystems in Bengaluru.', 
       longDescription: 'We design, implement, and maintain complete IT infrastructure for offices and businesses. Our AMC services cover system monitoring, troubleshooting, upgrades, and on-call support to ensure uninterrupted operations.',
       features: ['Full Stack Infrastructure Design', 'Annual Maintenance Contracts (AMC)', 'Proactive System Monitoring', 'Strategic Troubleshooting & Upgrades'],
       icon: Server, 
-      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2000&auto=format&fit=crop' 
+      image: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=2000' 
     },
     { 
       id: 'cctv-surveillance', 
@@ -74,7 +74,7 @@ function App() {
       longDescription: 'End-to-end CCTV solutions including site assessment, camera selection, installation, configuration, and regular maintenance to ensure reliable surveillance and security.',
       features: ['Expert Site Assessment', 'Custom Camera Selection', 'Precision Configuration', 'Dedicated Maintenance Support'],
       icon: Video, 
-      image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000&auto=format&fit=crop' 
+      image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000' 
     },
     { 
       id: 'networking-wifi', 
@@ -83,7 +83,7 @@ function App() {
       longDescription: 'We design and deploy structured cabling, LAN, and high-performance Wi-Fi networks that deliver stable, secure, and scalable connectivity for offices, commercial spaces, and homes.',
       features: ['Structured Cabling & LAN', 'High-Performance Wi-Fi Networks', 'Secure Scalable Connectivity', 'Commercial & Residential Solutions'],
       icon: Wifi, 
-      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2000&auto=format&fit=crop' 
+      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2000' 
     },
     { 
       id: 'security-firewall', 
@@ -92,7 +92,7 @@ function App() {
       longDescription: 'Advanced firewall deployment and network security solutions to protect your data, systems, and users from cyber threats and unauthorized access.',
       features: ['Next-Gen Firewall Deployment', 'Network Security Hardening', 'Cyber Threat Mitigation', 'User Access Control'],
       icon: Shield, 
-      image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop' 
+      image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000' 
     },
     { 
       id: 'home-automation', 
@@ -101,7 +101,7 @@ function App() {
       longDescription: 'Our home automation solutions integrate lighting, security, access control, and smart devices into a single intelligent system, providing enhanced comfort, safety, and energy efficiency.',
       features: ['Unified Smart System Integration', 'Automated Lighting & Access', 'Enhanced Safety Protocols', 'Energy Efficient Ecosystems'],
       icon: HomeIcon, 
-      image: 'https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=2000&auto=format&fit=crop' 
+      image: 'https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=2000' 
     },
     { 
       id: 'interiors-renovation', 
@@ -110,7 +110,7 @@ function App() {
       longDescription: 'We deliver functional office interiors and renovation solutions aligned with modern workspaces, seamlessly integrating IT, networking, and security infrastructure for a clean and future-ready environment.',
       features: ['Functional Office Space Planning', 'Modern Turnkey Renovation', 'Integrated Tech Pathways', 'Seamless Infrastructure Merging'],
       icon: PenTool, 
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop' 
+      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000' 
     }
   ];
 
@@ -132,9 +132,12 @@ function App() {
 
   return (
     <div className="min-h-screen relative bg-background-light dark:bg-background-dark transition-colors duration-500 selection:bg-secondary/30">
+      {/* React 19 Native Hoisted Metadata */}
+      <title>MBSYS | Professional IT Infrastructure & Security Bengaluru</title>
+      <meta name="description" content="MBSYS provides high-performance IT infrastructure, expert CCTV installation, and commercial renovation in Bengaluru. Book a site audit today." />
+      
       <CursorTrail darkMode={darkMode} />
       
-      {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-1 z-[200] pointer-events-none">
         <div 
           className="h-full bg-primary shadow-[0_0_10px_#EF4444] transition-all duration-150 ease-out"
@@ -142,13 +145,11 @@ function App() {
         />
       </div>
 
-      {/* Floating Tactical Comms Hub */}
       <QuickActionHub />
 
-      {/* Scroll to Top Button */}
       <button 
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={`fixed bottom-10 right-6 sm:bottom-12 sm:right-8 z-[90] p-4 rounded-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 border border-slate-200 dark:border-white/10 ${showScrollTop ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50 pointer-events-none'}`}
+        className={`fixed bottom-6 right-24 z-[90] p-4 rounded-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 border border-slate-200 dark:border-white/10 ${showScrollTop ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50 pointer-events-none'}`}
         aria-label="Scroll to top"
       >
         <ArrowUp className="w-5 h-5" />

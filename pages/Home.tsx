@@ -28,7 +28,6 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
     <div className="bg-background-light dark:bg-background-dark">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-28 sm:pt-32 pb-12 overflow-hidden">
-        {/* Animated Background Elements */}
         <div className="absolute inset-0 tech-grid opacity-30 pointer-events-none transition-opacity"></div>
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
            <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-secondary/10 dark:bg-secondary/5 rounded-full blur-[100px] animate-pulse-slow"></div>
@@ -152,8 +151,8 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
            
            <ScrollReveal delay={300}>
              <XRaySlider 
-                imageBefore="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop"
-                imageAfter="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2000&auto=format&fit=crop"
+                imageBefore="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000"
+                imageAfter="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2000"
                 labelBefore="Visual Finish"
                 labelAfter="System Mesh"
              />

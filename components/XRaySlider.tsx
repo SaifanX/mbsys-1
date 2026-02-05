@@ -17,10 +17,10 @@ const XRaySlider: React.FC<XRaySliderProps> = ({
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState({ before: false, after: false });
-  const [loadError, setLoadError] = useState(false);
+  const [loadError, setLoadError] = useState({ before: false, after: false });
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const isReady = (imagesLoaded.before && imagesLoaded.after) || loadError;
+  const isReady = (imagesLoaded.before && imagesLoaded.after) || (loadError.before || loadError.after);
 
   const handleMove = (clientX: number) => {
     if (!isReady) return;
@@ -76,8 +76,8 @@ const XRaySlider: React.FC<XRaySliderProps> = ({
     setImagesLoaded(prev => ({ ...prev, [type]: true }));
   };
 
-  const handleImageError = () => {
-    setLoadError(true);
+  const handleImageError = (type: 'before' | 'after') => {
+    setLoadError(prev => ({ ...prev, [type]: true }));
   };
 
   return (
@@ -87,36 +87,31 @@ const XRaySlider: React.FC<XRaySliderProps> = ({
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
     >
-      {/* Loading/Error Overlay */}
-      <div 
-        className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 transition-opacity duration-500 ${isReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-      >
-        {loadError ? (
-          <div className="flex flex-col items-center text-primary animate-pulse">
-            <AlertCircle className="w-10 h-10 mb-4" />
-            <span className="text-xs font-tech font-bold uppercase tracking-[0.3em]">Scan Malfunction</span>
-          </div>
-        ) : (
-          <div className="flex flex-col items-center">
-            <div className="relative mb-4">
-              <Loader2 className="w-10 h-10 text-primary animate-spin" />
-              <div className="absolute inset-0 rounded-full blur-md bg-primary/20 animate-pulse"></div>
-            </div>
-            <span className="text-xs font-tech font-bold uppercase tracking-[0.3em] text-slate-400 animate-pulse">Initializing Scan...</span>
-          </div>
-        )}
+      {/* Loading Overlay */}
+      <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 transition-opacity duration-500 ${isReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <div className="flex flex-col items-center">
+            <Loader2 className="w-8 h-8 text-secondary animate-spin mb-4" />
+            <span className="text-xs font-sans font-medium uppercase tracking-widest text-slate-400">Loading Grid...</span>
+        </div>
       </div>
 
       {/* Infrastructure Layer (Bottom) */}
       <div className={`absolute inset-0 w-full h-full bg-slate-900 overflow-hidden transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`}>
-         <img 
-          src={imageAfter} 
-          alt="Infrastructure View" 
-          className="w-full h-full object-cover opacity-80 mix-blend-screen filter grayscale brightness-125 scale-100"
-          draggable={false}
-          onLoad={() => handleImageLoad('after')}
-          onError={handleImageError}
-        />
+         {!loadError.after ? (
+           <img 
+            src={imageAfter} 
+            alt="Infrastructure View" 
+            className="w-full h-full object-cover opacity-80 mix-blend-screen filter grayscale brightness-125 scale-100"
+            draggable={false}
+            onLoad={() => handleImageLoad('after')}
+            onError={() => handleImageError('after')}
+          />
+         ) : (
+           <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 tech-grid">
+              <AlertCircle className="text-secondary mb-4 opacity-30" size={48} />
+              <p className="text-[10px] font-tech font-bold text-secondary uppercase tracking-widest opacity-40">System Mesh Data Not Found</p>
+           </div>
+         )}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-20"></div>
         
         <div className="absolute top-4 left-4 sm:top-8 sm:left-8 bg-secondary/90 backdrop-blur-xl px-4 py-2 rounded-lg border border-white/20 text-white text-[10px] font-tech font-bold uppercase tracking-[0.2em] shadow-2xl z-10 transition-transform group-hover:scale-105">
@@ -129,14 +124,21 @@ const XRaySlider: React.FC<XRaySliderProps> = ({
         className={`absolute inset-0 w-full h-full z-20 transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`}
         style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
       >
-        <img 
-          src={imageBefore} 
-          alt="Finished View" 
-          className="w-full h-full object-cover"
-          draggable={false}
-          onLoad={() => handleImageLoad('before')}
-          onError={handleImageError}
-        />
+        {!loadError.before ? (
+          <img 
+            src={imageBefore} 
+            alt="Finished View" 
+            className="w-full h-full object-cover"
+            draggable={false}
+            onLoad={() => handleImageLoad('before')}
+            onError={() => handleImageError('before')}
+          />
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-200 dark:bg-slate-800">
+             <AlertCircle className="text-slate-400 mb-4" size={48} />
+             <p className="text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest">Visual Finish Not Available</p>
+          </div>
+        )}
         <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 bg-white/90 dark:bg-black/90 backdrop-blur-xl px-4 py-2 rounded-lg text-slate-900 dark:text-white text-[10px] font-tech font-bold uppercase tracking-[0.2em] border border-slate-200 dark:border-white/10 shadow-2xl transition-transform group-hover:scale-105">
            {labelBefore}
         </div>
@@ -149,8 +151,6 @@ const XRaySlider: React.FC<XRaySliderProps> = ({
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 bg-primary rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(239,68,68,0.6)] border-4 border-white dark:border-slate-900 transition-transform hover:scale-110 active:scale-90">
           <MoveHorizontal className="text-white w-5 h-5 sm:w-7 sm:h-7" />
-          
-          {/* Sonar Pulse during interaction */}
           {isDragging && (
             <div className="absolute inset-[-8px] rounded-full border-2 border-primary animate-ping opacity-60"></div>
           )}
