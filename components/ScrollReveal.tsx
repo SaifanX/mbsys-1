@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -14,8 +14,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   className = "", 
   direction = 'up',
   delay = 0,
-  duration = 800,
-  threshold = 0.1
+  duration = 800, // Reduced default duration for snappier feel
+  threshold = 0.05 // Lower threshold for earlier trigger
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -28,14 +28,23 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
           observer.unobserve(entry.target);
         }
       },
-      { threshold, rootMargin: '0px 0px -50px 0px' }
+      { 
+        threshold, 
+        rootMargin: '0px 0px -5% 0px' 
+      }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+      observer.disconnect();
+    };
   }, [threshold]);
 
   const getAnimationClass = () => {
@@ -45,15 +54,17 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
     return "animate-fade-in";
   };
 
+  const style = useMemo(() => ({
+    animationDelay: `${delay}ms`,
+    animationDuration: `${duration}ms`,
+    animationFillMode: 'forwards' as const,
+  }), [delay, duration]);
+
   return (
     <div 
       ref={ref} 
-      className={`${getAnimationClass()} ${className}`}
-      style={{ 
-        animationDelay: `${delay}ms`,
-        animationDuration: `${duration}ms`,
-        animationFillMode: 'forwards'
-      }}
+      className={`${getAnimationClass()} gpu-accelerated ${className}`}
+      style={style}
     >
       {children}
     </div>

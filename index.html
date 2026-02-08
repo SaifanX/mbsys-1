@@ -11,7 +11,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,47 +30,25 @@
             fontFamily: {
               sans: ["Inter", "sans-serif"],
               display: ["Space Grotesk", "sans-serif"],
-              tech: ["Rajdhani", "sans-serif"],
             },
             animation: {
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'scan': 'scan 4s linear infinite',
-              'float': 'float 6s ease-in-out infinite',
-              'logo-pulse': 'logo-pulse 2.5s ease-in-out infinite',
-              'fade-in-up': 'fade-in-up 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
-              'fade-in-down': 'fade-in-down 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
-              'modal-enter': 'modal-enter 0.7s cubic-bezier(0.32, 0.72, 0, 1) forwards',
-              'slide-in-top': 'slide-in-top-sm 0.3s ease-out forwards',
-              'fade-in': 'fade-in 0.5s ease-out forwards',
+              'fade-in-up': 'fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'fade-in-down': 'fade-in-down 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'modal-enter': 'modal-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'fade-in': 'fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             },
             keyframes: {
-              scan: {
-                '0%': { transform: 'translateY(-100%)' },
-                '100%': { transform: 'translateY(100%)' },
-              },
-              float: {
-                '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-20px)' },
-              },
-              'logo-pulse': {
-                '0%, 100%': { opacity: '1', transform: 'scale(1)', filter: 'drop-shadow(0 0 2px rgba(239, 68, 68, 0.5))' },
-                '50%': { opacity: '0.4', transform: 'scale(0.85)', filter: 'drop-shadow(0 0 0px rgba(239, 68, 68, 0))' },
-              },
               'fade-in-up': {
-                '0%': { opacity: '0', transform: 'translateY(40px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
+                '0%': { opacity: '0', transform: 'translate3d(0, 30px, 0) scale(0.99)' },
+                '100%': { opacity: '1', transform: 'translate3d(0, 0, 0) scale(1)' },
               },
               'fade-in-down': {
-                '0%': { opacity: '0', transform: 'translateY(-40px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
+                '0%': { opacity: '0', transform: 'translate3d(0, -30px, 0) scale(0.99)' },
+                '100%': { opacity: '1', transform: 'translate3d(0, 0, 0) scale(1)' },
               },
               'modal-enter': {
-                '0%': { opacity: '0', transform: 'scale(0.96) translateY(2rem)' },
-                '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
-              },
-              'slide-in-top-sm': {
-                '0%': { opacity: '0', transform: 'translateY(-0.5rem)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
+                '0%': { opacity: '0', transform: 'translate3d(0, 20px, 0) scale(0.97)' },
+                '100%': { opacity: '1', transform: 'translate3d(0, 0, 0) scale(1)' },
               },
               'fade-in': {
                 '0%': { opacity: '0' },
@@ -91,6 +69,8 @@
         color: #0F172A;
         overflow-x: hidden;
         width: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       .dark body {
         background-color: #0B1120;
@@ -117,6 +97,8 @@
       }
       .reveal-hidden {
         opacity: 0;
+        transform: translate3d(0, 30px, 0);
+        will-change: transform, opacity;
       }
       ::-webkit-scrollbar {
         width: 6px;
@@ -136,6 +118,16 @@
       }
       .custom-scrollbar::-webkit-scrollbar {
         width: 4px;
+      }
+      .gpu-accelerated {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+        will-change: transform, opacity;
+      }
+      /* Smoother transitions for theme changes */
+      body, .bg-background-light, .dark .bg-background-dark, .text-slate-900, .dark .text-white {
+        transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       }
     </style>
     <script type="application/ld+json">

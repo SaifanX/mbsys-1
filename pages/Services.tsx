@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, CheckCircle2, X, Calendar, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle2, X, Calendar, ShieldCheck, Loader2, AlertCircle, MessageSquare } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import { Service } from '../types';
 
@@ -36,12 +36,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         onMouseMove={handleMouseMove}
         itemScope 
         itemType="https://schema.org/Service"
-        className="group relative bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-sm overflow-hidden hover:shadow-[0_30px_60px_rgba(6,182,212,0.15)] transition-all duration-700 hover:border-secondary/30"
+        className="group relative bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-sm overflow-hidden hover:shadow-2xl transition-all duration-700 hover:border-secondary/30"
       >
         <div 
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10"
           style={{
-            background: `radial-gradient(500px circle at ${mousePos.x}px ${mousePos.y}px, rgba(6, 182, 212, 0.12), transparent 85%)`
+            background: `radial-gradient(500px circle at ${mousePos.x}px ${mousePos.y}px, rgba(6, 182, 212, 0.1), transparent 85%)`
           }}
         />
 
@@ -50,14 +50,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             <img 
               itemProp="image"
               src={service.image} 
-              alt={`${service.title} implementation by MBSYS`} 
+              alt={`${service.title} implementation`} 
               onError={() => setImgError(true)}
-              className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" 
+              className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105" 
             />
           ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-40 tech-grid">
+            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-40">
                <AlertCircle className="text-slate-400 mb-2" size={32} />
-               <span className="text-[10px] font-tech font-bold uppercase tracking-[0.2em] text-slate-500">Node_Asset_Offline</span>
+               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Image Unavailable</span>
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
@@ -68,21 +68,21 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         <div className="p-8 sm:p-12 relative z-20">
           <h3 
             itemProp="name"
-            className="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white mb-4 sm:mb-6 group-hover:text-secondary transition-colors leading-tight"
+            className="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white mb-4 sm:mb-6 group-hover:text-secondary transition-colors"
           >
             {service.title}
           </h3>
           <p 
             itemProp="description"
-            className="text-slate-600 dark:text-slate-400 font-sans text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed opacity-90"
+            className="text-slate-600 dark:text-slate-400 font-sans text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed"
           >
             {service.description}
           </p>
           <button 
             onClick={() => onExpand(service)}
-            className="inline-flex items-center text-xs sm:text-sm font-tech font-black uppercase tracking-[0.25em] text-secondary hover:text-primary transition-all group/link"
+            className="inline-flex items-center text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-secondary hover:text-primary transition-all group/link"
           >
-            Explore Protocol <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-3 transition-transform" />
+            Service Details <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-3 transition-transform" />
           </button>
         </div>
       </div>
@@ -98,8 +98,6 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
   useEffect(() => {
     if (expandedService) {
       document.body.style.overflow = 'hidden';
-      setIsImgLoaded(false);
-      setModalImgError(false);
     } else {
       document.body.style.overflow = 'auto';
     }
@@ -108,125 +106,90 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
     };
   }, [expandedService]);
 
+  const getWhatsAppLink = (serviceTitle: string) => {
+    const phoneNumber = "919886374122";
+    const message = `I would like to inquire about your ${serviceTitle} services.`;
+    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  };
+
   return (
     <div className="pt-32 sm:pt-48 pb-24">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
         <ScrollReveal className="mb-16 sm:mb-32 text-center sm:text-left">
-          <span className="text-primary font-tech font-bold tracking-[0.4em] uppercase text-xs sm:text-sm mb-4 block">Architectural Solutions</span>
-          <h2 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold text-slate-900 dark:text-white mb-6 sm:mb-8 leading-none tracking-tighter">Expertise Stack</h2>
-          <div className="w-32 sm:w-48 h-2 bg-secondary mx-auto sm:mx-0 rounded-full"></div>
+          <span className="text-primary font-bold tracking-[0.4em] uppercase text-xs sm:text-sm mb-4 block">Our Solutions</span>
+          <h2 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold text-slate-900 dark:text-white mb-6 sm:mb-8 tracking-tighter">Technical Expertise</h2>
+          <div className="w-32 h-1.5 bg-secondary mx-auto sm:mx-0 rounded-full"></div>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12">
           {services.map((service, idx) => (
-            <ServiceCard 
-              key={service.id} 
-              service={service} 
-              idx={idx} 
-              onExpand={setExpandedService} 
-            />
+            <ServiceCard key={service.id} service={service} idx={idx} onExpand={setExpandedService} />
           ))}
         </div>
       </div>
 
       {expandedService && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8 lg:p-16">
-          <div 
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-3xl animate-fade-in"
-            onClick={() => setExpandedService(null)}
-          >
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center gap-3 text-white/40 font-tech text-xs uppercase tracking-[0.6em] animate-pulse">
-               Click anywhere to exit
-            </div>
-          </div>
+          <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-3xl" onClick={() => setExpandedService(null)}></div>
           
-          <div 
-            itemScope 
-            itemType="https://schema.org/Service"
-            className="relative w-full max-w-6xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl shadow-3xl overflow-hidden flex flex-col lg:flex-row animate-modal-enter max-h-[94vh] mt-12 lg:mt-0"
-          >
-            <button 
-              onClick={() => setExpandedService(null)}
-              className="absolute top-6 right-6 z-[10000] p-4 bg-primary text-white rounded-full transition-all border border-white/20 shadow-2xl active:scale-90 group hover:scale-110"
-              aria-label="Close details"
-            >
-              <X size={28} className="group-hover:rotate-90 transition-transform duration-300" />
+          <div className="relative w-full max-w-4xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl shadow-3xl overflow-y-auto flex flex-col animate-modal-enter max-h-[94vh] mt-4">
+            <button onClick={() => setExpandedService(null)} className="fixed lg:absolute top-6 right-6 z-[10000] p-4 bg-primary text-white rounded-full shadow-2xl transition-all">
+              <X size={28} />
             </button>
             
-            <div className="w-full lg:w-1/2 h-48 sm:h-80 lg:h-auto overflow-hidden relative shrink-0 bg-slate-100 dark:bg-slate-900">
-              {!isImgLoaded && !modalImgError && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Loader2 className="animate-spin text-secondary" size={32} />
-                </div>
-              )}
+            <div className="w-full h-64 sm:h-96 lg:h-[450px] overflow-hidden relative shrink-0">
               {!modalImgError ? (
                 <img 
-                  itemProp="image"
                   src={expandedService.image} 
-                  alt={`${expandedService.title} detailed view`} 
+                  alt={expandedService.title} 
                   onLoad={() => setIsImgLoaded(true)}
-                  onError={() => {
-                    setModalImgError(true);
-                    setIsImgLoaded(true);
-                  }}
+                  onError={() => setModalImgError(true)}
                   className={`w-full h-full object-cover transition-opacity duration-700 ${isImgLoaded ? 'opacity-100' : 'opacity-0'}`} 
                 />
               ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 tech-grid">
-                  <AlertCircle className="text-secondary mb-4 opacity-30" size={64} />
-                  <p className="text-xs font-tech font-bold text-secondary uppercase tracking-widest opacity-40">Visual Sync Interface Offline</p>
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-100 dark:bg-slate-900">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Image Unavailable</p>
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-white dark:from-surface-dark via-transparent to-transparent opacity-70"></div>
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20"></div>
-              
               <div className="absolute top-6 left-6 flex items-center gap-3 px-5 py-2.5 bg-slate-900/85 backdrop-blur-md rounded-full border border-white/10">
                  <ShieldCheck size={18} className="text-secondary" />
-                 <span className="text-xs font-tech font-bold text-white tracking-[0.2em] uppercase">Verified Protocol</span>
+                 <span className="text-xs font-bold text-white tracking-[0.2em] uppercase">Quality Assured</span>
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 p-8 sm:p-14 lg:p-20 space-y-8 sm:space-y-12 overflow-y-auto custom-scrollbar bg-white dark:bg-surface-dark">
-              <div className="space-y-4 sm:space-y-6 pt-4 lg:pt-0">
+            <div className="w-full p-8 sm:p-14 lg:p-16 space-y-8 bg-white dark:bg-surface-dark">
+              <div className="space-y-4">
                 <div className="inline-flex items-center gap-3 text-secondary">
                   <expandedService.icon size={22} />
-                  <span className="font-tech text-xs sm:text-sm uppercase font-bold tracking-[0.4em]">Protocol // Sync</span>
+                  <span className="text-xs sm:text-sm uppercase font-bold tracking-[0.3em]">Technical Specification</span>
                 </div>
-                <h2 
-                  itemProp="name"
-                  className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-900 dark:text-white tracking-tighter leading-none"
-                >
+                <h2 className="text-3xl sm:text-5xl font-display font-bold text-slate-900 dark:text-white tracking-tighter">
                   {expandedService.title}
                 </h2>
               </div>
 
-              <p 
-                itemProp="description"
-                className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-light"
-              >
+              <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-light">
                 {expandedService.longDescription}
               </p>
 
-              <div className="space-y-6 sm:space-y-8">
-                <h4 className="text-xs sm:text-sm font-tech font-black uppercase tracking-[0.4em] text-slate-500">Infrastructure Nodes</h4>
-                <div className="grid grid-cols-1 gap-4 sm:gap-5">
+              <div className="space-y-6">
+                <h4 className="text-xs sm:text-sm font-bold uppercase tracking-[0.4em] text-slate-500">Key Features</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {expandedService.features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-4 p-5 sm:p-6 bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800 rounded-xl">
+                    <div key={i} className="flex items-center gap-4 p-5 bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800 rounded-xl">
                       <CheckCircle2 size={20} className="text-secondary shrink-0" />
-                      <span className="text-sm sm:text-lg font-sans font-medium text-slate-800 dark:text-slate-200">{feature}</span>
+                      <span className="text-sm sm:text-lg font-sans text-slate-800 dark:text-slate-200">{feature}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-10 sm:pt-14 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-4 sm:gap-6">
-                <a 
-                  href="https://cal.id/mbsys"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-5 sm:py-6 bg-primary text-white font-tech font-bold uppercase tracking-[0.4em] text-sm sm:text-base hover:bg-red-600 transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-4 rounded-xl"
-                >
-                  <Calendar size={22} /> Book Technical Audit
+              <div className="pt-10 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-4 pb-10">
+                <a href="https://cal.id/mbsys" target="_blank" className="flex-1 py-5 bg-primary text-white font-bold uppercase tracking-[0.3em] text-sm flex items-center justify-center gap-4 rounded-xl">
+                  <Calendar size={22} /> Book Audit
+                </a>
+                <a href={getWhatsAppLink(expandedService.title)} target="_blank" className="flex-1 py-5 bg-green-600 text-white font-bold uppercase tracking-[0.3em] text-sm flex items-center justify-center gap-4 rounded-xl">
+                  <MessageSquare size={22} /> WhatsApp Inquiry
                 </a>
               </div>
             </div>
