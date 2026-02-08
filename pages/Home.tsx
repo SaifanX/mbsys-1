@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Zap, CheckCircle, Activity, Globe, ExternalLink, ShieldCheck, Calendar, Award, Users, ShieldAlert } from 'lucide-react';
+import { ArrowRight, Zap, CheckCircle, Activity, Globe, ShieldCheck, Calendar, Award, Users } from 'lucide-react';
 import Counter from '../components/Counter';
 import XRaySlider from '../components/XRaySlider';
 import MbsysLogo from '../components/MbsysLogo';
@@ -62,7 +62,7 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
               </ScrollReveal>
               
               <ScrollReveal delay={200}>
-                <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold leading-[1.0] tracking-tighter text-slate-900 dark:text-white">
+                <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold leading-[1.0] tracking-tighter text-slate-900 dark:text-white hero-glow">
                   Integrated <br/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-red-600">Infrastructure.</span>
                 </h1>
