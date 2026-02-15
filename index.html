@@ -4,13 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/logo.png">
-
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="MBSYS | Professional Infrastructure Solutions">
-    <meta property="og:image" content="assets/logo.png">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=1200">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +30,6 @@
             fontFamily: {
               sans: ["Inter", "sans-serif"],
               display: ["Space Grotesk", "sans-serif"],
-              serif: ["'Times New Roman'", "serif"],
             },
             animation: {
               'fade-in-up': 'fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
@@ -49,7 +44,7 @@
               },
               'fade-in-down': {
                 '0%': { opacity: '0', transform: 'translate3d(0, -30px, 0) scale(0.99)' },
-                '100%': { opacity: '1', transform: 'translate3d(0, -30px, 0) scale(1)' },
+                '100%': { opacity: '1', transform: 'translate3d(0, 0, 0) scale(1)' },
               },
               'modal-enter': {
                 '0%': { opacity: '0', transform: 'translate3d(0, 20px, 0) scale(0.97)' },
@@ -100,12 +95,6 @@
         background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
                           linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
       }
-      .hero-glow {
-        text-shadow: 0 0 40px rgba(239, 68, 68, 0.2);
-      }
-      .dark .hero-glow {
-        text-shadow: 0 0 60px rgba(239, 68, 68, 0.3);
-      }
       .reveal-hidden {
         opacity: 0;
         transform: translate3d(0, 30px, 0);
@@ -124,12 +113,19 @@
       .dark ::-webkit-scrollbar-thumb {
         background: rgba(148, 163, 184, 0.1);
       }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.5);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
       .gpu-accelerated {
         transform: translateZ(0);
         backface-visibility: hidden;
         perspective: 1000px;
         will-change: transform, opacity;
       }
+      /* Smoother transitions for theme changes */
       body, .bg-background-light, .dark .bg-background-dark, .text-slate-900, .dark .text-white {
         transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       }
@@ -139,7 +135,7 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "MBSYS",
-      "image": "assets/logo.png",
+      "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=1200",
       "description": "Professional IT infrastructure, CCTV surveillance, and office renovation services in Bengaluru.",
       "telephone": "+919886374122",
       "address": {
@@ -150,7 +146,19 @@
         "postalCode": "560078",
         "addressCountry": "IN"
       },
-      "url": "https://mbsys.co.in"
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 12.9063,
+        "longitude": 77.5857
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "url": "https://mbsys.co.in",
+      "priceRange": "₹₹"
     }
     </script>
   <script type="importmap">
@@ -159,7 +167,8 @@
     "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
   }
 }
 </script>
