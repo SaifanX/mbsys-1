@@ -78,7 +78,7 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
                 <a href="https://cal.id/mbsys" target="_blank" className="px-10 py-5 bg-primary text-white font-bold uppercase tracking-[0.2em] text-sm rounded-sm shadow-xl flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-300">
                   <Calendar size={20} /> Book Site Audit
                 </a>
-                <a href="#services" onClick={(e) => handleLinkClick(e, '#services')} className="px-10 py-5 bg-white dark:bg-transparent border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-bold uppercase tracking-[0.2em] text-sm rounded-sm flex items-center justify-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300">
+                <a href="/services" onClick={(e) => handleLinkClick(e, '/services')} className="px-10 py-5 bg-white dark:bg-transparent border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-bold uppercase tracking-[0.2em] text-sm rounded-sm flex items-center justify-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300">
                   Our Services <ArrowRight size={20} />
                 </a>
               </ScrollReveal>

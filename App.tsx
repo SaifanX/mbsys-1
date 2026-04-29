@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LocationSection from './components/LocationSection';
 import QuickActionHub from './components/QuickActionHub';
 import MeteorShower from './components/MeteorShower';
 import Home from './pages/Home';
-import Services from './pages/Services';
+import ServicesPage from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import { 
@@ -15,21 +16,13 @@ import { Service, TimelineItem } from './types';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const [currentPath, setCurrentPath] = useState(window.location.hash || '#');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-
-  const navigate = useCallback((path: string) => {
-    window.location.hash = path;
-    setCurrentPath(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleHashChange = () => {
-      setCurrentPath(window.location.hash || '#');
-    };
-    
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
       
@@ -39,7 +32,6 @@ function App() {
       setScrollProgress(scrolled);
     };
 
-    window.addEventListener('hashchange', handleHashChange);
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     // Check system preference
@@ -54,7 +46,6 @@ function App() {
     }
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
       window.removeEventListener('scroll', handleScroll);
     };
   }, [darkMode]);
@@ -127,20 +118,8 @@ function App() {
     { year: '2024', title: 'Division Growth', description: 'Interiors and Office Renovation division fully operational.' },
   ];
 
-  const renderContent = () => {
-    switch (currentPath) {
-      case '#services': return <Services services={services} onNavigate={navigate} />;
-      case '#about': return <About timeline={timeline} onNavigate={navigate} />;
-      case '#contact': return <Contact onNavigate={navigate} />;
-      default: return <Home services={services} onNavigate={navigate} />;
-    }
-  };
-
   return (
     <div className="min-h-screen relative bg-background-light dark:bg-background-dark transition-colors duration-500 selection:bg-secondary/30">
-      <title>MBSYS | Professional IT Infrastructure & Security Bengaluru</title>
-      <meta name="description" content="MBSYS provides high-performance IT infrastructure, expert CCTV installation, and office renovation in Bengaluru." />
-      
       <MeteorShower darkMode={darkMode} />
 
       <div className="fixed top-0 left-0 w-full h-1 z-[200] pointer-events-none">
@@ -160,15 +139,25 @@ function App() {
         <ArrowUp className="w-5 h-5" />
       </button>
 
-      <Navbar darkMode={darkMode} onToggleTheme={handleToggleTheme} onNavigate={navigate} currentPath={currentPath} />
+      <Navbar 
+        darkMode={darkMode} 
+        onToggleTheme={handleToggleTheme} 
+        onNavigate={(path) => navigate(path)} 
+        currentPath={location.pathname} 
+      />
 
       <main className="relative min-h-screen z-10">
-        {renderContent()}
+        <Routes>
+          <Route path="/" element={<Home services={services} onNavigate={(path) => navigate(path)} />} />
+          <Route path="/services" element={<ServicesPage services={services} onNavigate={(path) => navigate(path)} />} />
+          <Route path="/about" element={<About timeline={timeline} onNavigate={(path) => navigate(path)} />} />
+          <Route path="/contact" element={<Contact onNavigate={(path) => navigate(path)} />} />
+        </Routes>
       </main>
 
       <div className="relative z-10">
         <LocationSection />
-        <Footer onNavigate={navigate} />
+        <Footer onNavigate={(path) => navigate(path)} />
       </div>
     </div>
   );

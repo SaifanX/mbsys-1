@@ -16,28 +16,28 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     {
       title: "Services",
       links: [
-        { name: "IT Infrastructure", href: "#services" },
-        { name: "CCTV & Security", href: "#services" },
-        { name: "Networking", href: "#services" },
-        { name: "Office Interiors", href: "#services" },
+        { name: "IT Infrastructure", href: "/services" },
+        { name: "CCTV & Security", href: "/services" },
+        { name: "Networking", href: "/services" },
+        { name: "Office Interiors", href: "/services" },
       ]
     },
     {
       title: "Company",
       links: [
-        { name: "About Us", href: "#about" },
-        { name: "Milestones", href: "#about" },
-        { name: "Contact", href: "#contact" },
-        { name: "Careers", href: "#contact" },
+        { name: "About Us", href: "/about" },
+        { name: "Milestones", href: "/about" },
+        { name: "Contact", href: "/contact" },
+        { name: "Careers", href: "/contact" },
       ]
     },
     {
       title: "Support",
       links: [
-        { name: "Privacy Policy", href: "#" },
-        { name: "Safety Standards", href: "#" },
-        { name: "Terms of Service", href: "#" },
-        { name: "Customer Support", href: "#contact" },
+        { name: "Privacy Policy", href: "/" },
+        { name: "Safety Standards", href: "/" },
+        { name: "Terms of Service", href: "/" },
+        { name: "Customer Support", href: "/contact" },
       ]
     }
   ];
@@ -48,8 +48,8 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           
           <div className="lg:col-span-4 space-y-8">
-            <a href="#" onClick={(e) => handleLinkClick(e, '#')} className="inline-block hover:scale-105 transition-transform duration-300">
-              <MbsysLogo className="h-12 dark:brightness-200 transition-all" />
+            <a href="/" onClick={(e) => handleLinkClick(e, '/')} className="inline-block hover:scale-105 transition-transform duration-300">
+              <MbsysLogo className="h-20 md:h-24 dark:brightness-200 transition-all" />
             </a>
             <p className="text-base sm:text-lg leading-relaxed max-w-sm text-slate-500 dark:text-slate-400 font-light italic">
               "Professional engineering excellence focused on delivering integrated infrastructure and technical systems."
