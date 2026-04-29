@@ -3,6 +3,7 @@ import { ArrowRight, Zap, CheckCircle, Activity, Globe, ExternalLink, ShieldChec
 import Counter from '../components/Counter';
 import XRaySlider from '../components/XRaySlider';
 import MbsysLogo from '../components/MbsysLogo';
+import ServiceCalculator from '../components/ServiceCalculator';
 import TestimonialCarousel from '../components/TestimonialCarousel';
 import ScrollReveal from '../components/ScrollReveal';
 import { Service, Testimonial } from '../types';
@@ -181,6 +182,8 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
           </div>
         </div>
       </section>
+
+      <ServiceCalculator />
 
       {/* Testimonials */}
       <section className="py-24 sm:py-36 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800">
