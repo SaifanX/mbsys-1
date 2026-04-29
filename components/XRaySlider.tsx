@@ -6,13 +6,17 @@ interface XRaySliderProps {
   imageAfter: string;
   labelBefore?: string;
   labelAfter?: string;
+  altBefore?: string;
+  altAfter?: string;
 }
 
 const XRaySlider: React.FC<XRaySliderProps> = ({ 
   imageBefore, 
   imageAfter,
   labelBefore = "Visual Finish",
-  labelAfter = "Infrastructure"
+  labelAfter = "Infrastructure",
+  altBefore = "Finished technical design",
+  altAfter = "Technical infrastructure layer"
 }) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -100,7 +104,7 @@ const XRaySlider: React.FC<XRaySliderProps> = ({
          {!loadError.after ? (
            <img 
             src={imageAfter} 
-            alt="Infrastructure View" 
+            alt={altAfter} 
             className="w-full h-full object-cover opacity-80 mix-blend-screen filter grayscale brightness-125 scale-100"
             draggable={false}
             onLoad={() => handleImageLoad('after')}
@@ -130,7 +134,7 @@ const XRaySlider: React.FC<XRaySliderProps> = ({
         {!loadError.before ? (
           <img 
             src={imageBefore} 
-            alt="Finished View" 
+            alt={altBefore} 
             className="w-full h-full object-cover"
             draggable={false}
             onLoad={() => handleImageLoad('before')}

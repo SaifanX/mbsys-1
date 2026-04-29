@@ -49,7 +49,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           
           <div className="lg:col-span-4 space-y-8">
             <a href="/" onClick={(e) => handleLinkClick(e, '/')} className="inline-block hover:scale-105 transition-transform duration-300">
-              <MbsysLogo className="h-20 md:h-24 dark:brightness-200 transition-all" />
+              <MbsysLogo className="h-24 md:h-28 dark:brightness-200 transition-all" />
             </a>
             <p className="text-base sm:text-lg leading-relaxed max-w-sm text-slate-500 dark:text-slate-400 font-light italic">
               "Professional engineering excellence focused on delivering integrated infrastructure and technical systems."
@@ -96,18 +96,18 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <div className="p-3 bg-secondary/10 rounded-xl shrink-0 h-fit">
                   <Phone size={18} className="text-secondary" />
                 </div>
-                <div>
+                <div itemscope itemtype="https://schema.org/ContactPoint">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Phone</p>
-                  <a href="tel:+919886374122" className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">+91 98863 74122</a>
+                  <a href="tel:+919886374122" itemprop="telephone" className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">+91 98863 74122</a>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="p-3 bg-primary/10 rounded-xl shrink-0 h-fit">
                   <Mail size={18} className="text-primary" />
                 </div>
-                <div>
+                <div itemscope itemtype="https://schema.org/ContactPoint">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Email</p>
-                  <a href="mailto:info@mbsys.co.in" className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">info@mbsys.co.in</a>
+                  <a href="mailto:info@mbsys.co.in" itemprop="email" className="text-sm sm:text-base font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">info@mbsys.co.in</a>
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 py-10 text-center space-y-6 border-t border-slate-200 dark:border-slate-800">
         <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] opacity-60">
-          © 2026 MBSYS INFRASTRUCTURE SOLUTIONS. BENGALURU, INDIA.
+          © 2026 MBSYS INFRASTRUCTURE SOLUTIONS. <span className="text-primary">SERVING BENGALURU & SOUTH INDIA.</span>
         </p>
         
         <div className="max-w-4xl mx-auto">

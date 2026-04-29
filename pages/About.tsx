@@ -1,6 +1,7 @@
 import React from 'react';
 import { Terminal, Cpu, Shield, Globe, Activity, Calendar, ArrowRight } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 import { TimelineItem } from '../types';
 
 interface AboutProps {
@@ -47,6 +48,10 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
 
   return (
     <div className="pt-32 sm:pt-48 pb-24 bg-background-light dark:bg-background-dark transition-colors overflow-x-hidden">
+      <SEO 
+        title="The MBSYS Story | Technical Infrastructure Experts"
+        description="Established in 2016, MBSYS is Bengaluru's leading partner for professional technical infrastructure, precision engineering, and reliable security solutions."
+      />
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Story Section */}
@@ -77,7 +82,7 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
             <div className="relative aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl transition-all duration-1000">
               <img 
                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000" 
-                alt="Infrastructure Project" 
+                alt="MBSYS Technical Infrastructure Headquarters Bengaluru" 
                 loading="lazy"
                 className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
               />

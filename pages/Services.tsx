@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle2, X, Calendar, ShieldCheck, Loader2, AlertCircle, MessageSquare } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 import { Service } from '../types';
 
 interface ServicesProps {
@@ -114,10 +115,14 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
 
   return (
     <div className="pt-32 sm:pt-48 pb-24">
+      <SEO 
+        title="IT Infrastructure, CCTV & Security Services"
+        description="Comprehensive technical services including enterprise networking, high-definition CCTV surveillance, structured cabling, and smart office infrastructure."
+      />
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
         <ScrollReveal className="mb-16 sm:mb-32 text-center sm:text-left">
           <span className="text-primary font-bold tracking-[0.4em] uppercase text-xs sm:text-sm mb-4 block">Our Solutions</span>
-          <h2 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold text-slate-900 dark:text-white mb-6 sm:mb-8 tracking-tighter">Technical Expertise</h2>
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold text-slate-900 dark:text-white mb-6 sm:mb-8 tracking-tighter">Technical Expertise <span className="text-primary block sm:inline">Bengaluru.</span></h1>
           <div className="w-32 h-1.5 bg-secondary mx-auto sm:mx-0 rounded-full"></div>
         </ScrollReveal>
 

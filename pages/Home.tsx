@@ -6,6 +6,7 @@ import MbsysLogo from '../components/MbsysLogo';
 import ServiceCalculator from '../components/ServiceCalculator';
 import TestimonialCarousel from '../components/TestimonialCarousel';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 import { Service, Testimonial } from '../types';
 
 interface HomeProps {
@@ -48,6 +49,10 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
 
   return (
     <div className="bg-background-light dark:bg-background-dark">
+      <SEO 
+        title="Professional IT Infrastructure & Security Bengaluru"
+        description="MBSYS provides premium IT infrastructure, industrial CCTV surveillance, networking solutions, and professional office renovation services in Bengaluru."
+      />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-28 sm:pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0 tech-grid opacity-30 pointer-events-none"></div>
@@ -144,6 +149,8 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
                 imageAfter="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2000"
                 labelBefore="Finished Design"
                 labelAfter="Technical Systems"
+                altBefore="Premium office interior design Bengaluru"
+                altAfter="Complex technical networking and infrastructure layer"
              />
            </ScrollReveal>
         </div>

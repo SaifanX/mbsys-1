@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Mail, Loader2, CheckCircle2, Phone, Calendar, ShieldAlert } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 
 interface ContactProps {
   onNavigate: (path: string) => void;
@@ -89,6 +90,10 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
 
   return (
     <div className="pt-32 sm:pt-48 pb-24">
+      <SEO 
+        title="Get a Technical Audit | Contact MBSYS"
+        description="Ready to upgrade your infrastructure? Contact Bengaluru's technical experts for a professional site audit, CCTV consultation, or networking quote."
+      />
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 mb-24 items-start">

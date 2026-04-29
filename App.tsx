@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import LocationSection from './components/LocationSection';
 import QuickActionHub from './components/QuickActionHub';
 import MeteorShower from './components/MeteorShower';
+import CursorTrail from './components/CursorTrail';
 import Home from './pages/Home';
 import ServicesPage from './pages/Services';
 import About from './pages/About';
@@ -121,6 +122,7 @@ function App() {
   return (
     <div className="min-h-screen relative bg-background-light dark:bg-background-dark transition-colors duration-500 selection:bg-secondary/30">
       <MeteorShower darkMode={darkMode} />
+      <CursorTrail darkMode={darkMode} />
 
       <div className="fixed top-0 left-0 w-full h-1 z-[200] pointer-events-none">
         <div 

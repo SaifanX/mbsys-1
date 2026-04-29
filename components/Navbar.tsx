@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
             }`}
         >
           <a href="/" onClick={(e) => handleLinkClick(e, '/')} className="flex items-center gap-3 group active:scale-95 transition-transform">
-            <MbsysLogo className={`transition-all duration-500 ${scrolled ? 'h-10 md:h-12' : 'h-16 md:h-20'}`} />
+            <MbsysLogo className={`transition-all duration-500 ${scrolled ? 'h-12 md:h-14' : 'h-24 md:h-28'}`} />
           </a>
 
           <div className="hidden md:flex items-center space-x-10">
@@ -52,13 +52,13 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className={`text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative group py-2 h-full flex flex-col justify-center ${currentPath === link.href
-                    ? 'text-primary'
-                    : 'text-slate-600 dark:text-slate-300'
+                className={`text-[13px] font-bold uppercase tracking-[0.25em] transition-all relative group py-2 h-full flex flex-col justify-center ${currentPath === link.href
+                  ? 'text-primary'
+                  : 'text-slate-600 dark:text-slate-300'
                   } hover:text-primary`}
               >
                 {link.name}
-                <span className={`absolute bottom-0 left-0 h-[1.5px] bg-primary transition-all duration-500 ${currentPath === link.href ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'}`}></span>
+                <span className={`absolute bottom-0 left-0 h-[2px] bg-primary transition-all duration-500 ${currentPath === link.href ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'}`}></span>
               </a>
             ))}
 
@@ -76,15 +76,15 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
                 href="https://cal.id/mbsys"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-secondary transition-colors text-[10px] font-bold uppercase tracking-widest px-3"
+                className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-secondary transition-colors text-[11px] font-bold uppercase tracking-widest px-3"
               >
-                <Calendar size={14} /> Book Consultation
+                <Calendar size={15} /> Book Consultation
               </a>
               <a
                 href="tel:+919886374122"
-                className="flex items-center gap-3 px-5 py-2.5 bg-primary text-white rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg transition-all"
+                className="flex items-center gap-3 px-6 py-3 bg-primary text-white rounded-full font-bold uppercase tracking-widest text-[11px] shadow-lg transition-all"
               >
-                <Phone size={14} /> Call Support
+                <Phone size={15} /> Call Support
               </a>
             </div>
           </div>
@@ -110,7 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme, onNavigate, cu
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800">
-            <MbsysLogo className="h-12" />
+            <MbsysLogo className="h-16" />
             <button onClick={() => setIsDrawerOpen(false)} className="p-2 text-slate-500">
               <X size={24} />
             </button>
