@@ -8,6 +8,7 @@ import MeteorShower from './components/MeteorShower';
 import CursorTrail from './components/CursorTrail';
 import Home from './pages/Home';
 import ServicesPage from './pages/Services';
+import ServiceDetail from './pages/ServiceDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import { 
@@ -59,6 +60,7 @@ function App() {
     { 
       id: 'infra-amc', 
       title: 'IT Infrastructure & Support', 
+      slug: 'it-infrastructure-support',
       description: 'Design, implementation, and maintenance of mission-critical IT environments in Bengaluru.', 
       longDescription: 'We design, implement, and maintain complete IT infrastructure for businesses. Our Annual Maintenance Contracts (AMC) cover system monitoring, troubleshooting, and scheduled upgrades.',
       features: ['Infrastructure Design', 'Maintenance Contracts (AMC)', 'Proactive System Monitoring', 'System Troubleshooting'],
@@ -68,6 +70,7 @@ function App() {
     { 
       id: 'cctv-surveillance', 
       title: 'CCTV & Security Solutions', 
+      slug: 'cctv-security-solutions',
       description: 'Professional IP camera installations for reliable business surveillance.', 
       longDescription: 'End-to-end security solutions including site assessment, camera selection, installation, and configuration to ensure reliable office surveillance.',
       features: ['Site Security Assessment', 'High-Definition Installation', 'Network Configuration', 'Routine Maintenance'],
@@ -77,6 +80,7 @@ function App() {
     { 
       id: 'networking-wifi', 
       title: 'Networking & Connectivity', 
+      slug: 'networking-connectivity',
       description: 'High-performance cabling and scalable wireless solutions for business continuity.', 
       longDescription: 'We deploy structured cabling and high-performance wireless networks that deliver stable and secure connectivity for modern office environments.',
       features: ['Structured Cabling', 'Wireless Network Design', 'Secure Connectivity', 'Commercial Installations'],
@@ -86,6 +90,7 @@ function App() {
     { 
       id: 'security-firewall', 
       title: 'Data Security & Firewalls', 
+      slug: 'data-security-firewalls',
       description: 'Advanced network security to protect critical business data.', 
       longDescription: 'Advanced firewall deployment and network security solutions to protect your systems from cyber threats and unauthorized access.',
       features: ['Firewall Deployment', 'Network Hardening', 'Security Audits', 'Access Control Systems'],
@@ -95,6 +100,7 @@ function App() {
     { 
       id: 'home-automation', 
       title: 'Smart Office Solutions', 
+      slug: 'smart-office-solutions',
       description: 'Integration of lighting, security, and smart access control systems.', 
       longDescription: 'Our smart office solutions integrate lighting, security, and access control into a single manageable system for efficiency and comfort.',
       features: ['System Integration', 'Automated Lighting Control', 'Access Management', 'Energy Efficiency'],
@@ -104,6 +110,7 @@ function App() {
     { 
       id: 'interiors-renovation', 
       title: 'Office Interiors & Renovation', 
+      slug: 'office-renovation-interiors',
       description: 'Modern workspace design with integrated technical infrastructure.', 
       longDescription: 'We deliver functional office interiors and renovation solutions, seamlessly integrating IT, networking, and security infrastructure for a clean workspace.',
       features: ['Office Space Planning', 'Turnkey Renovations', 'Infrastructure Integration', 'Modern Design Standards'],
@@ -152,6 +159,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home services={services} onNavigate={(path) => navigate(path)} />} />
           <Route path="/services" element={<ServicesPage services={services} onNavigate={(path) => navigate(path)} />} />
+          <Route path="/services/:slug" element={<ServiceDetail services={services} onNavigate={(path) => navigate(path)} />} />
           <Route path="/about" element={<About timeline={timeline} onNavigate={(path) => navigate(path)} />} />
           <Route path="/contact" element={<Contact onNavigate={(path) => navigate(path)} />} />
         </Routes>

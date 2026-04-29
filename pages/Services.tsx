@@ -135,12 +135,18 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
 
       {expandedService && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8 lg:p-16">
-          <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-3xl" onClick={() => setExpandedService(null)}></div>
+          <div className="fixed inset-0 bg-slate-950/90 backdrop-blur-3xl" onClick={() => setExpandedService(null)}></div>
           
-          <div className="relative w-full max-w-4xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl shadow-3xl overflow-y-auto flex flex-col animate-modal-enter max-h-[94vh] mt-4">
-            <button onClick={() => setExpandedService(null)} className="fixed lg:absolute top-6 right-6 z-[10000] p-4 bg-primary text-white rounded-full shadow-2xl transition-all">
-              <X size={28} />
-            </button>
+          {/* Persistent Close Button */}
+          <button 
+            onClick={() => setExpandedService(null)}
+            className="fixed top-6 right-6 z-[10000] p-4 bg-white/10 hover:bg-primary/20 border border-white/20 rounded-full text-white backdrop-blur-xl transition-all hover:scale-110 active:scale-95 group"
+            title="Close Modal"
+          >
+            <X size={28} className="group-hover:rotate-90 transition-transform duration-300" />
+          </button>
+          
+          <div className="relative w-full max-w-5xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-y-auto flex flex-col animate-modal-enter max-h-[92vh] mt-4 no-scrollbar">
             
             <div className="w-full h-64 sm:h-96 lg:h-[450px] overflow-hidden relative shrink-0">
               {!modalImgError ? (
@@ -187,6 +193,18 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              <div className="pt-8">
+                 <button 
+                   onClick={() => {
+                     setExpandedService(null);
+                     onNavigate(`/services/${expandedService.slug}`);
+                   }}
+                   className="w-full py-5 bg-slate-900 dark:bg-slate-800 text-white font-bold uppercase tracking-[0.4em] text-xs flex items-center justify-center gap-4 rounded-xl hover:bg-primary transition-all border border-white/5"
+                 >
+                   <ArrowRight size={18} /> View Full Service Case Study
+                 </button>
               </div>
 
               <div className="pt-10 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-4 pb-10">

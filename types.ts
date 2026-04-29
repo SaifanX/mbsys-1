@@ -3,6 +3,7 @@ import { LucideIcon } from 'lucide-react';
 export interface Service {
   id: string;
   title: string;
+  slug: string;
   description: string;
   longDescription: string;
   features: string[];
