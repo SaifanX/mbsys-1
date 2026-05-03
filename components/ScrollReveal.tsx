@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -7,6 +8,7 @@ interface ScrollRevealProps {
   delay?: number;
   duration?: number;
   threshold?: number;
+  onClick?: () => void;
 }
 
 const ScrollReveal: React.FC<ScrollRevealProps> = ({ 
@@ -14,60 +16,45 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   className = "", 
   direction = 'up',
   delay = 0,
-  duration = 800, // Reduced default duration for snappier feel
-  threshold = 0.05 // Lower threshold for earlier trigger
+  threshold = 0.1,
+  onClick
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { 
-        threshold, 
-        rootMargin: '0px 0px -5% 0px' 
-      }
-    );
-
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-      observer.disconnect();
+  const getVariants = () => {
+    const hidden = {
+      opacity: 0,
+      y: direction === 'up' ? 30 : direction === 'down' ? -30 : 0,
+      scale: 0.98
     };
-  }, [threshold]);
 
-  const getAnimationClass = () => {
-    if (!isVisible) return "reveal-hidden";
-    if (direction === 'up') return "animate-fade-in-up";
-    if (direction === 'down') return "animate-fade-in-down";
-    return "animate-fade-in";
+    return {
+      hidden,
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+          type: "spring",
+          damping: 25,
+          stiffness: 100,
+          duration: 0.8,
+          delay: delay / 1000,
+        }
+      }
+    };
   };
 
-  const style = useMemo(() => ({
-    animationDelay: `${delay}ms`,
-    animationDuration: `${duration}ms`,
-    animationFillMode: 'forwards' as const,
-  }), [delay, duration]);
-
   return (
-    <div 
-      ref={ref} 
-      className={`${getAnimationClass()} gpu-accelerated ${className}`}
-      style={style}
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: threshold }}
+      variants={getVariants()}
+      className={className}
+      onClick={onClick}
+      style={{ willChange: "transform, opacity", cursor: onClick ? 'pointer' : 'inherit' }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 

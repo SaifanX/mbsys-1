@@ -1,95 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=1200">
+    <title>MBSYS | Enterprise IT Infrastructure & Security</title>
+    <script>
+      // Immediate brand-sync: Lock dark mode before paint
+      document.documentElement.classList.add('dark');
+      document.documentElement.style.backgroundColor = '#020617';
+    </script>
 
-    <!-- Fonts -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "MBSYS",
-      "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=1200",
-      "@id": "https://mbsys.co.in",
-      "url": "https://mbsys.co.in",
-      "telephone": "+919886374122",
-      "priceRange": "₹₹₹",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "JP Nagar",
-        "addressLocality": "Bengaluru",
-        "addressRegion": "KA",
-        "postalCode": "560078",
-        "addressCountry": "IN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 12.9063,
-        "longitude": 77.5857
-      },
-      "areaServed": {
-        "@type": "City",
-        "name": "Bengaluru"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Infrastructure Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "IT Infrastructure & Networking"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "CCTV Surveillance & Security"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Office Renovation & Interiors"
-            }
-          }
-        ]
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "09:00",
-        "closes": "18:00"
+    <style>
+      /* Critical CSS for MBSYS Pre-render Shell */
+      body { background-color: #020617; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+      .mbsys-shell {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
       }
-    }
-    </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
-  }
-}
-</script>
+      .shell-hex {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .shell-hex::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 2px solid #EF4444;
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        animation: hex-rotate 4s linear infinite;
+      }
+      .shell-hex span {
+        color: white;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+      }
+      .shell-status {
+        margin-top: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .status-text {
+        color: #94a3b8;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+      }
+      .status-bar {
+        width: 120px;
+        height: 2px;
+        background: rgba(239, 68, 68, 0.1);
+        overflow: hidden;
+        border-radius: 4px;
+      }
+      .status-progress {
+        width: 40%;
+        height: 100%;
+        background: #EF4444;
+        animation: progress-slide 1.5s ease-in-out infinite;
+      }
+      @keyframes hex-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      @keyframes progress-slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+    </style>
 </head>
-  <body class="bg-background-light dark:bg-background-dark font-sans antialiased selection:bg-secondary/30 selection:text-secondary">
-    <div id="root"></div>
-    <script type="module" src="index.tsx"></script>
-  </body>
+<body class="bg-slate-950 text-white selection:bg-primary/30">
+    <div id="root">
+      <!-- High-Performance Pre-render Shell -->
+      <div class="mbsys-shell" id="app-shell">
+        <div class="shell-hex"><span>M</span></div>
+        <div class="shell-status">
+          <div class="status-text">Connecting to Node</div>
+          <div class="status-bar"><div class="status-progress"></div></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      // Clean removal after React mount
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const shell = document.getElementById('app-shell');
+          if (shell) {
+            shell.style.opacity = '0';
+            shell.style.transition = 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            setTimeout(() => {
+              shell.remove();
+              document.body.style.overflow = 'auto';
+            }, 600);
+          }
+        }, 400);
+      });
+    </script>
+</body>
 </html>

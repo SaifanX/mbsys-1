@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-# Sitemap Location
-Sitemap: https://mbsys.co.in/sitemap.xml
-
-# Performance optimization: Crawl-delay for smaller bots
-Crawl-delay: 10

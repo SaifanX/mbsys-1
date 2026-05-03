@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LocationSection from './components/LocationSection';
 import QuickActionHub from './components/QuickActionHub';
 import MeteorShower from './components/MeteorShower';
 import CursorTrail from './components/CursorTrail';
-import Home from './pages/Home';
-import ServicesPage from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
-import About from './pages/About';
-import Contact from './pages/Contact';
+import TransitionOverlay from './components/TransitionOverlay';
 import { 
-  Server, Shield, Wifi, Video, Home as HomeIcon, PenTool, ArrowUp
+  Server, Shield, Wifi, Video, Home as HomeIcon, PenTool, ArrowUp, Loader2
 } from 'lucide-react';
 import { Service, TimelineItem } from './types';
 
+// Speed Demon: Lazy loading for sub-pages
+const Home = React.lazy(() => import('./pages/Home'));
+const ServicesPage = React.lazy(() => import('./pages/Services'));
+const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
+const About = React.lazy(() => import('./pages/About'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const darkMode = true; // Hardcoded dark mode
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isExiting, setIsExiting] = useState(false);
+  const [overlayColor, setOverlayColor] = useState("#020617"); // Default MBSYS Deep Slate
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,24 +43,20 @@ function App() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setDarkMode(true);
-    }
-
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.add('dark');
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [darkMode]);
+  }, []);
 
-  const handleToggleTheme = (e: React.MouseEvent) => {
-    setDarkMode(!darkMode);
+  const handleSwitchBrand = () => {
+    setOverlayColor("#171512"); // Hunar Charcoal
+    setIsExiting(true);
+    // Wait for the animation to cover the screen before redirecting
+    setTimeout(() => {
+      window.location.href = 'https://hunar.mbsys.co.in?from=mbsys';
+    }, 1100);
   };
 
   const services: Service[] = [
@@ -65,7 +68,7 @@ function App() {
       longDescription: 'We design, implement, and maintain complete IT infrastructure for businesses. Our Annual Maintenance Contracts (AMC) cover system monitoring, troubleshooting, and scheduled upgrades.',
       features: ['Infrastructure Design', 'Maintenance Contracts (AMC)', 'Proactive System Monitoring', 'System Troubleshooting'],
       icon: Server, 
-      image: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=2000' 
+      image: 'https://images.unsplash.com/photo-1597733336794-12d05021d510?q=60&w=1200&auto=format' 
     },
     { 
       id: 'cctv-surveillance', 
@@ -75,7 +78,7 @@ function App() {
       longDescription: 'End-to-end security solutions including site assessment, camera selection, installation, and configuration to ensure reliable office surveillance.',
       features: ['Site Security Assessment', 'High-Definition Installation', 'Network Configuration', 'Routine Maintenance'],
       icon: Video, 
-      image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000' 
+      image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=60&w=1200&auto=format' 
     },
     { 
       id: 'networking-wifi', 
@@ -85,7 +88,7 @@ function App() {
       longDescription: 'We deploy structured cabling and high-performance wireless networks that deliver stable and secure connectivity for modern office environments.',
       features: ['Structured Cabling', 'Wireless Network Design', 'Secure Connectivity', 'Commercial Installations'],
       icon: Wifi, 
-      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2000' 
+      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=60&w=1200&auto=format' 
     },
     { 
       id: 'security-firewall', 
@@ -95,7 +98,7 @@ function App() {
       longDescription: 'Advanced firewall deployment and network security solutions to protect your systems from cyber threats and unauthorized access.',
       features: ['Firewall Deployment', 'Network Hardening', 'Security Audits', 'Access Control Systems'],
       icon: Shield, 
-      image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000' 
+      image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=60&w=1200&auto=format' 
     },
     { 
       id: 'home-automation', 
@@ -105,7 +108,7 @@ function App() {
       longDescription: 'Our smart office solutions integrate lighting, security, and access control into a single manageable system for efficiency and comfort.',
       features: ['System Integration', 'Automated Lighting Control', 'Access Management', 'Energy Efficiency'],
       icon: HomeIcon, 
-      image: 'https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=2000' 
+      image: 'https://images.unsplash.com/photo-1558002038-1055907df827?q=60&w=1200&auto=format' 
     },
     { 
       id: 'interiors-renovation', 
@@ -115,7 +118,7 @@ function App() {
       longDescription: 'We deliver functional office interiors and renovation solutions, seamlessly integrating IT, networking, and security infrastructure for a clean workspace.',
       features: ['Office Space Planning', 'Turnkey Renovations', 'Infrastructure Integration', 'Modern Design Standards'],
       icon: PenTool, 
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000' 
+      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=60&w=1200&auto=format' 
     }
   ];
 
@@ -127,7 +130,9 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen relative bg-background-light dark:bg-background-dark transition-colors duration-500 selection:bg-secondary/30">
+    <div className="min-h-screen relative bg-slate-950 transition-colors duration-500 selection:bg-secondary/30 overflow-x-hidden">
+      <TransitionOverlay isExiting={isExiting} brandColor={overlayColor} />
+      <ScrollToTop />
       <MeteorShower darkMode={darkMode} />
       <CursorTrail darkMode={darkMode} />
 
@@ -149,20 +154,26 @@ function App() {
       </button>
 
       <Navbar 
-        darkMode={darkMode} 
-        onToggleTheme={handleToggleTheme} 
         onNavigate={(path) => navigate(path)} 
         currentPath={location.pathname} 
+        onSwitchBrand={handleSwitchBrand}
       />
 
       <main className="relative min-h-screen z-10">
-        <Routes>
-          <Route path="/" element={<Home services={services} onNavigate={(path) => navigate(path)} />} />
-          <Route path="/services" element={<ServicesPage services={services} onNavigate={(path) => navigate(path)} />} />
-          <Route path="/services/:slug" element={<ServiceDetail services={services} onNavigate={(path) => navigate(path)} />} />
-          <Route path="/about" element={<About timeline={timeline} onNavigate={(path) => navigate(path)} />} />
-          <Route path="/contact" element={<Contact onNavigate={(path) => navigate(path)} />} />
-        </Routes>
+        <React.Suspense fallback={
+          <div className="fixed inset-0 flex items-center justify-center bg-slate-50 dark:bg-slate-950 z-[1000]">
+            <Loader2 className="w-10 h-10 text-primary animate-spin" />
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<Home services={services} onNavigate={(path) => navigate(path)} />} />
+            <Route path="/services" element={<ServicesPage services={services} onNavigate={(path) => navigate(path)} />} />
+            <Route path="/services/:slug" element={<ServiceDetail services={services} onNavigate={(path) => navigate(path)} />} />
+            <Route path="/about" element={<About timeline={timeline} onNavigate={(path) => navigate(path)} />} />
+            <Route path="/contact" element={<Contact onNavigate={(path) => navigate(path)} />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </React.Suspense>
       </main>
 
       <div className="relative z-10">

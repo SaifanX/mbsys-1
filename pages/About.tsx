@@ -81,7 +81,7 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
           <ScrollReveal direction="down" delay={300} className="relative group mt-12 lg:mt-0">
             <div className="relative aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl transition-all duration-1000">
               <img 
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000" 
+                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=60&w=1200&auto=format" 
                 alt="MBSYS Technical Infrastructure Headquarters Bengaluru" 
                 loading="lazy"
                 className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
