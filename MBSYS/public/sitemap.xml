@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mbsys.co.in/</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mbsys.co.in/services</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url><loc>https://mbsys.co.in/services/it-infrastructure-support</loc><priority>0.8</priority></url>
+  <url><loc>https://mbsys.co.in/services/cctv-security-solutions</loc><priority>0.8</priority></url>
+  <url><loc>https://mbsys.co.in/services/networking-connectivity</loc><priority>0.8</priority></url>
+  <url><loc>https://mbsys.co.in/services/data-security-firewalls</loc><priority>0.8</priority></url>
+  <url><loc>https://mbsys.co.in/services/smart-office-solutions</loc><priority>0.8</priority></url>
+  <url><loc>https://mbsys.co.in/services/office-renovation-interiors</loc><priority>0.8</priority></url>
+  <url>
+    <loc>https://mbsys.co.in/about</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mbsys.co.in/contact</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
