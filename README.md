@@ -2,6 +2,7 @@
 
 [![Live Site](https://img.shields.io/badge/Live-mbsys.co.in-EF4444?style=for-the-badge)](https://mbsys.co.in)
 [![Tech Stack](https://img.shields.io/badge/Stack-React%20%7C%20Vite%20%7C%20Tailwind%204-0F172A?style=for-the-badge)](https://github.com/SaifanX/mbsys-1)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c5e3f0ce-e0d0-4e24-b217-51768d17b85f/deploy-status)](https://app.netlify.com/projects/mbsys1/deploys)
 
 MBSYS is a premium, high-performance platform dedicated to enterprise IT infrastructure, security solutions, and modern workspace optimization. Built with a focus on visual excellence and seamless brand connectivity.
 
