@@ -40,7 +40,7 @@ const BrandToggle: React.FC<BrandToggleProps> = ({ currentBrand, onToggle }) => 
         <img 
           src="/favicon.png" 
           alt="MBSYS" 
-          className={`w-4 h-4 object-contain transition-all ${currentBrand === 'mbsys' ? 'brightness-110' : 'grayscale opacity-50'}`} 
+          className={`w-4 h-4 object-contain transition-all ${currentBrand === 'mbsys' ? 'brightness-110' : 'opacity-80'}`} 
         />
         <span className="text-[10px] font-bold uppercase tracking-widest">MBSYS</span>
       </button>
