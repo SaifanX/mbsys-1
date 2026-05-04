@@ -55,7 +55,7 @@ function App() {
     setIsExiting(true);
     // Wait for the animation to cover the screen before redirecting
     setTimeout(() => {
-      window.location.href = 'http://localhost:5174?from=mbsys';
+      window.location.href = 'https://hunar.mbsys.co.in?from=mbsys';
     }, 1100);
   };
 
