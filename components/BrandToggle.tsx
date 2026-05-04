@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LayoutGrid, Cpu } from 'lucide-react';
+import { LayoutGrid } from 'lucide-react';
 
 interface BrandToggleProps {
   currentBrand: 'mbsys' | 'hunar';
@@ -37,7 +37,11 @@ const BrandToggle: React.FC<BrandToggleProps> = ({ currentBrand, onToggle }) => 
           currentBrand === 'mbsys' ? 'text-primary' : 'text-slate-400'
         }`}
       >
-        <Cpu size={14} className={currentBrand === 'mbsys' ? 'animate-pulse' : ''} />
+        <img 
+          src="/favicon.png" 
+          alt="MBSYS" 
+          className={`w-4 h-4 object-contain transition-all ${currentBrand === 'mbsys' ? 'brightness-110' : 'grayscale opacity-50'}`} 
+        />
         <span className="text-[10px] font-bold uppercase tracking-widest">MBSYS</span>
       </button>
 
