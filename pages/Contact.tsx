@@ -51,7 +51,8 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
 
     const form = e.currentTarget;
     const formSubmissionData = new FormData(form);
-    formSubmissionData.append("access_key", "dd8c64c7-af35-4e38-9e3d-c91955a0f707");
+    formSubmissionData.append("access_key", "e3068bf8-3c15-4094-9444-225621b099e6");
+    formSubmissionData.append("subject", "MBSYS: New Infrastructure Inquiry");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {

@@ -26,11 +26,33 @@ const ServiceCalculator: React.FC = () => {
     return base;
   }, [activeService, quantity, isAdvanced]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would send to a CRM or Webhook
-    console.log('Lead Captured:', { activeService, quantity, estimate, ...contactInfo });
-    setIsSubmitted(true);
+    
+    const submissionData = new FormData();
+    submissionData.append("access_key", "e3068bf8-3c15-4094-9444-225621b099e6");
+    submissionData.append("subject", "CALCULATOR: New Quote Request");
+    submissionData.append("email", contactInfo.email);
+    submissionData.append("phone", contactInfo.phone);
+    submissionData.append("message", `
+      Service: ${activeService}
+      Quantity: ${quantity}
+      Advanced Mode: ${isAdvanced ? 'Yes' : 'No'}
+      Estimated Quote: ₹${estimate.toLocaleString()}
+    `);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: submissionData
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      }
+    } catch (error) {
+      console.error('Error submitting calculator lead:', error);
+    }
   };
 
   return (
