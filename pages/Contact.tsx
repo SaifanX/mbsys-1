@@ -14,7 +14,7 @@ interface FormErrors {
 }
 
 const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -25,6 +25,8 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
     if (data.name.length < 3) newErrors.name = "Name must be at least 3 characters.";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) newErrors.email = "Please enter a valid email address.";
+    const phoneRegex = /^[0-9\s+]{10,}$/;
+    if (data.phone && !phoneRegex.test(data.phone)) newErrors.phone = "Please enter a valid phone number.";
     if (data.message.length < 10) newErrors.message = "Message must be at least 10 characters.";
     return newErrors;
   };
@@ -64,7 +66,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
       if (data.success) {
         setStatus('success');
         setResultMessage("Thank you. Your message has been received.");
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
         setTouched({});
       } else {
         setStatus('error');
@@ -161,6 +163,22 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
                 {touched.email && errors.email && (
                   <p className="px-2 text-xs font-sans text-primary flex items-center gap-2">
                     <ShieldAlert size={14} /> {errors.email}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <label className="text-xs sm:text-sm font-sans font-bold uppercase tracking-[0.4em] text-slate-500">Phone Number</label>
+                <input 
+                  type="tel" name="phone" value={formData.phone} 
+                  onChange={e => setFormData({...formData, phone: e.target.value})}
+                  onBlur={() => handleBlur('phone')}
+                  className={getInputClasses('phone')}
+                  placeholder="+91 00000 00000"
+                />
+                {touched.phone && errors.phone && (
+                  <p className="px-2 text-xs font-sans text-primary flex items-center gap-2">
+                    <ShieldAlert size={14} /> {errors.phone}
                   </p>
                 )}
               </div>

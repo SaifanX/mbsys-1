@@ -27,7 +27,7 @@ const LocationSection: React.FC = () => {
         <div className="lg:col-span-8 h-[350px] lg:h-auto relative group overflow-hidden">
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248897.0497830073!2d77.28269998671874!3d12.906666699999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15f17ca16937%3A0x1394a04740953861!2sMBSYS!5e0!3m2!1sen!2sin!4v1768919217116!5m2!1sen!2sin" 
-            className="w-full h-full border-0 transition-all duration-700 dark:grayscale dark:invert-[0.1]"
+            className="w-full h-full border-0 transition-all duration-700"
             allowFullScreen={true} 
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"
