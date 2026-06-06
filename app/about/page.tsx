@@ -2,8 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import { Cpu, Shield, Globe, Activity, Calendar, ArrowRight } from 'lucide-react';
 import ScrollReveal from '../../components/ScrollReveal';
-import { TIMELINE } from '../../constants';
 import { TimelineItem } from '../../types';
+import { fetchQuery } from "convex/nextjs";
+import { api } from "../../convex/_generated/api";
+import { CmsProvider } from "../../lib/cms";
+import AdminBar from "../../components/AdminBar";
+import EditableText from "../../components/EditableText";
+import EditableImage from "../../components/EditableImage";
 
 interface TimelineCardProps {
   item: TimelineItem;
@@ -21,13 +26,13 @@ const TimelineCard: React.FC<TimelineCardProps> = ({ item, index }) => {
       
       <div className="space-y-4 sm:space-y-5 group text-left">
         <span className="inline-block px-4 py-1.5 rounded-sm bg-slate-100 dark:bg-slate-800 text-xs sm:text-sm font-sans font-bold text-secondary tracking-[0.3em] uppercase border border-slate-200 dark:border-slate-700">
-          {item.year}
+          <EditableText path={`timeline[${index}].year`} />
         </span>
         <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors leading-none">
-          {item.title}
+          <EditableText path={`timeline[${index}].title`} />
         </h3>
         <p className="text-slate-600 dark:text-slate-400 font-sans text-base sm:text-lg leading-relaxed max-w-2xl">
-          {item.description}
+          <EditableText path={`timeline[${index}].description`} />
         </p>
       </div>
     </ScrollReveal>
@@ -39,121 +44,167 @@ export const metadata = {
   description: "Established in 2016, MBSYS is Bengaluru's leading partner for professional technical infrastructure, precision engineering, and reliable security solutions.",
 };
 
-export default function AboutPage() {
-  const coreValues = [
-    { icon: Cpu, title: 'Precision', desc: 'Expert engineering and installation standards for all infrastructure components.' },
-    { icon: Shield, title: 'Reliability', desc: 'Durable and secure systems designed for continuous operation.' },
-    { icon: Globe, title: 'Compliance', desc: 'Alignment with international industry standards and local regulations.' },
-    { icon: Activity, title: 'Monitoring', desc: 'Proactive maintenance and support systems for peak performance.' }
-  ];
+export default async function AboutPage() {
+  let aboutData = null;
+  try {
+    aboutData = await fetchQuery(api.content.get, { pageName: "about" });
+  } catch (e) {
+    console.error("Failed to fetch about content from Convex", e);
+  }
+
+  const fallbackData = {
+    title: "Infrastructure Excellence.",
+    description: "Headquartered in Bengaluru, MBSYS delivers professional technical solutions by integrating advanced infrastructure with functional design.",
+    stats: {
+      clientFocus: "100%",
+      completedProjects: "500+",
+    },
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=60&w=1200&auto=format",
+    imageTitle: "Professional Technical Operations",
+    imageSubtitle: "Bengaluru Headquarters",
+    coreValues: [
+      { title: "Precision", desc: "Expert engineering and installation standards for all infrastructure components." },
+      { title: "Reliability", desc: "Durable and secure systems designed for continuous operation." },
+      { title: "Compliance", desc: "Alignment with international industry standards and local regulations." },
+      { title: "Monitoring", desc: "Proactive maintenance and support systems for peak performance." }
+    ],
+    timeline: [
+      { year: "2016", title: "Company Established", description: "MBSYS launches as a technical infrastructure consultancy in Bengaluru." },
+      { year: "2018", title: "Service Expansion", description: "Major expansion into industrial security and surveillance systems." },
+      { year: "2021", title: "System Integration", description: "Integrated facility controls added to core service offerings." },
+      { year: "2024", title: "Division Growth", description: "Interiors and Office Renovation division fully operational." }
+    ],
+    ctaTitle: "Discuss Your Project",
+    ctaDesc: "Partner with our technical team to design and deploy robust infrastructure for your facility."
+  };
+
+  const initialData = { ...fallbackData, ...(aboutData || {}) };
+
+  const icons = [Cpu, Shield, Globe, Activity];
 
   return (
-    <div className="pt-32 sm:pt-48 pb-24 bg-background-light dark:bg-background-dark transition-colors overflow-x-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
-        
-        {/* Story Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 mb-24 sm:mb-48 items-center">
-          <ScrollReveal className="space-y-10 sm:space-y-12 text-center sm:text-left">
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-              <span className="text-xs font-sans font-bold text-primary tracking-[0.4em] uppercase">Company Overview</span>
-            </div>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl 2xl:text-9xl font-display font-bold text-slate-900 dark:text-white leading-[0.95] tracking-tighter transition-colors">
-              Infrastructure <br/><span className="text-secondary">Excell–ence.</span>
-            </h1>
-            <p className="text-lg sm:text-2xl text-slate-600 dark:text-slate-400 font-sans leading-relaxed border-l-0 sm:border-l-4 border-slate-200 dark:border-slate-800 sm:pl-10 py-4 transition-colors font-light">
-              Headquartered in Bengaluru, MBSYS delivers professional technical solutions by integrating advanced infrastructure with functional design.
-            </p>
-            <div className="grid grid-cols-2 gap-8 sm:gap-12 pt-6">
-              <div>
-                <p className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-900 dark:text-white transition-colors">100%</p>
-                <p className="text-xs sm:text-sm font-sans font-bold uppercase tracking-[0.3em] text-slate-500 mt-2">Client Focus</p>
-              </div>
-              <div>
-                <p className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-900 dark:text-white transition-colors">500+</p>
-                <p className="text-xs sm:text-sm font-sans font-bold uppercase tracking-[0.3em] text-slate-500 mt-2">Projects Completed</p>
-              </div>
-            </div>
-          </ScrollReveal>
+    <CmsProvider pageName="about" initialData={initialData}>
+      <div className="pt-32 sm:pt-48 pb-24 bg-background-light dark:bg-background-dark transition-colors overflow-x-hidden">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
           
-          <ScrollReveal direction="down" delay={300} className="relative group mt-12 lg:mt-0">
-            <div className="relative aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl transition-all duration-1000">
-              <img 
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=60&w=1200&auto=format" 
-                alt="MBSYS Technical Infrastructure Headquarters Bengaluru" 
-                loading="lazy"
-                className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent flex items-end p-10 sm:p-14">
-                <div className="space-y-2 sm:space-y-4 text-white">
-                  <p className="font-sans font-bold text-xs tracking-[0.4em] uppercase opacity-70">Bengaluru Headquarters</p>
-                  <p className="font-display font-bold text-2xl sm:text-4xl text-secondary leading-tight">Professional Technical <br/>Operations</p>
+          {/* Story Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 mb-24 sm:mb-48 items-center">
+            <div className="space-y-10 sm:space-y-12 text-center sm:text-left">
+              <ScrollReveal>
+                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+                  <span className="text-xs font-sans font-bold text-primary tracking-[0.4em] uppercase">Company Overview</span>
+                </div>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={200}>
+                <h1 className="text-5xl sm:text-7xl md:text-8xl 2xl:text-9xl font-display font-bold text-slate-900 dark:text-white leading-[0.95] tracking-tighter transition-colors">
+                  <EditableText path="title" />
+                </h1>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={300}>
+                <div className="border-l-0 sm:border-l-4 border-slate-200 dark:border-slate-800 sm:pl-10 py-4 transition-colors">
+                  <EditableText path="description" element="p" className="text-lg sm:text-2xl text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-light" />
+                </div>
+              </ScrollReveal>
+              
+              <div className="grid grid-cols-2 gap-8 sm:gap-12 pt-6">
+                <div>
+                  <EditableText path="stats.clientFocus" element="p" className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-900 dark:text-white transition-colors" />
+                  <p className="text-xs sm:text-sm font-sans font-bold uppercase tracking-[0.3em] text-slate-500 mt-2">Client Focus</p>
+                </div>
+                <div>
+                  <EditableText path="stats.completedProjects" element="p" className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-slate-900 dark:text-white transition-colors" />
+                  <p className="text-xs sm:text-sm font-sans font-bold uppercase tracking-[0.3em] text-slate-500 mt-2">Projects Completed</p>
                 </div>
               </div>
             </div>
-          </ScrollReveal>
-        </div>
-
-        {/* Core Values */}
-        <div className="mb-24 sm:mb-48">
-          <ScrollReveal className="text-center mb-20 sm:mb-24">
-            <span className="text-primary font-sans font-bold tracking-[0.6em] uppercase text-xs sm:text-sm mb-6 block">Our Standards</span>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-slate-900 dark:text-white leading-none tracking-tighter">Technical Excellence</h2>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
-            {coreValues.map((value, i) => (
-              <ScrollReveal key={i} delay={i * 150} className="p-10 sm:p-14 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-2xl hover:border-secondary transition-all hover:-translate-y-4 group shadow-lg text-center">
-                <value.icon className="w-12 h-12 sm:w-16 sm:h-16 text-primary mb-8 sm:mb-12 mx-auto transition-transform duration-500" />
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-display font-bold text-slate-900 dark:text-white mb-4 transition-colors leading-tight">{value.title}</h3>
-                <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 font-sans leading-relaxed transition-colors opacity-90">{value.desc}</p>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-
-        {/* Timeline */}
-        <div className="mb-24 sm:mb-48">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-            <ScrollReveal className="lg:col-span-5 lg:sticky lg:top-48 h-fit text-center lg:text-left">
-              <span className="text-secondary font-sans font-bold tracking-[0.6em] uppercase text-xs sm:text-sm mb-6 block">Our History</span>
-              <h2 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold text-slate-900 dark:text-white mb-8 transition-colors leading-none tracking-tighter">Milestones</h2>
-              <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 font-sans max-w-md mx-auto lg:mx-0 leading-relaxed font-light">Established since 2016, we have a proven track record of delivering reliable technical infrastructure.</p>
+            
+            <ScrollReveal direction="down" delay={300} className="relative group mt-12 lg:mt-0">
+              <div className="relative aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl transition-all duration-1000">
+                <EditableImage 
+                  path="image" 
+                  alt="MBSYS Technical Infrastructure Headquarters Bengaluru"
+                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                  wrapperClassName="w-full h-full"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent flex items-end p-10 sm:p-14 pointer-events-none">
+                  <div className="space-y-2 sm:space-y-4 text-white col-span-2">
+                    <EditableText path="imageSubtitle" element="p" className="font-sans font-bold text-xs tracking-[0.4em] uppercase opacity-70" />
+                    <EditableText path="imageTitle" element="p" className="font-display font-bold text-2xl sm:text-4xl text-secondary leading-tight" />
+                  </div>
+                </div>
+              </div>
             </ScrollReveal>
-            <div className="lg:col-span-7">
-              <div className="max-w-3xl mx-auto lg:mx-0">
-                {TIMELINE.map((item, i) => (
-                  <TimelineCard key={i} item={item} index={i} />
-                ))}
+          </div>
+
+          {/* Core Values */}
+          <div className="mb-24 sm:mb-48">
+            <ScrollReveal className="text-center mb-20 sm:mb-24">
+              <span className="text-primary font-sans font-bold tracking-[0.6em] uppercase text-xs sm:text-sm mb-6 block">Our Standards</span>
+              <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-slate-900 dark:text-white leading-none tracking-tighter">Technical Excellence</h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+              {initialData.coreValues.map((value, i) => {
+                const IconComp = icons[i % icons.length];
+                return (
+                  <ScrollReveal key={i} delay={i * 150} className="p-10 sm:p-14 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-2xl hover:border-secondary transition-all hover:-translate-y-4 group shadow-lg text-center">
+                    <IconComp className="w-12 h-12 sm:w-16 sm:h-16 text-primary mb-8 sm:mb-12 mx-auto transition-transform duration-500" />
+                    <EditableText path={`coreValues[${i}].title`} element="h3" className="text-xl sm:text-2xl lg:text-3xl font-display font-bold text-slate-900 dark:text-white mb-4 transition-colors leading-tight" />
+                    <EditableText path={`coreValues[${i}].desc`} element="p" className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 font-sans leading-relaxed transition-colors opacity-90" />
+                  </ScrollReveal>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div className="mb-24 sm:mb-48">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+              <ScrollReveal className="lg:col-span-5 lg:sticky lg:top-48 h-fit text-center lg:text-left">
+                <span className="text-secondary font-sans font-bold tracking-[0.6em] uppercase text-xs sm:text-sm mb-6 block">Our History</span>
+                <h2 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold text-slate-900 dark:text-white mb-8 transition-colors leading-none tracking-tighter">Milestones</h2>
+                <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 font-sans max-w-md mx-auto lg:mx-0 leading-relaxed font-light">Established since 2016, we have a proven track record of delivering reliable technical infrastructure.</p>
+              </ScrollReveal>
+              <div className="lg:col-span-7">
+                <div className="max-w-3xl mx-auto lg:mx-0">
+                  {initialData.timeline.map((item, i) => (
+                    <TimelineCard key={i} item={item} index={i} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Final Conversion CTA */}
-        <ScrollReveal className="mb-24 p-12 lg:p-24 bg-slate-900 dark:bg-slate-800/80 border border-slate-900 dark:border-white/10 text-white rounded-3xl overflow-hidden relative group">
-           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 text-center lg:text-left">
-              <div className="space-y-6">
-                 <h2 className="text-4xl sm:text-6xl font-display font-bold leading-none tracking-tighter">Discuss Your Project</h2>
-                 <p className="text-lg sm:text-xl opacity-70 font-sans max-w-xl leading-relaxed">Partner with our technical team to design and deploy robust infrastructure for your facility.</p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-6 shrink-0 w-full lg:w-auto">
-                 <a 
-                   href="https://cal.id/mbsys" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="px-12 py-6 bg-primary text-white font-sans font-bold uppercase tracking-[0.2em] rounded-xl shadow-2xl hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-4"
-                 >
-                   <Calendar size={20} /> Schedule Consultation
-                 </a>
-                 <Link 
-                   href="/contact"
-                   className="px-12 py-6 border border-white/20 font-sans font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-white/10 transition-all text-center flex items-center justify-center gap-4"
-                 >
-                   Contact Us <ArrowRight size={20} />
-                 </Link>
-              </div>
-           </div>
-        </ScrollReveal>
+          {/* Final Conversion CTA */}
+          <ScrollReveal className="mb-24 p-12 lg:p-24 bg-slate-900 dark:bg-slate-800/80 border border-slate-900 dark:border-white/10 text-white rounded-3xl overflow-hidden relative group">
+             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 text-center lg:text-left">
+                <div className="space-y-6">
+                   <EditableText path="ctaTitle" element="h2" className="text-4xl sm:text-6xl font-display font-bold leading-none tracking-tighter" />
+                   <EditableText path="ctaDesc" element="p" className="text-lg sm:text-xl opacity-70 font-sans max-w-xl leading-relaxed" />
+                </div>
+                <div className="flex flex-col sm:flex-row gap-6 shrink-0 w-full lg:w-auto">
+                   <a 
+                     href="https://cal.id/mbsys" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     className="px-12 py-6 bg-primary text-white font-sans font-bold uppercase tracking-[0.2em] rounded-xl shadow-2xl hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-4"
+                   >
+                     <Calendar size={20} /> Schedule Consultation
+                   </a>
+                   <Link 
+                     href="/contact"
+                     className="px-12 py-6 border border-white/20 font-sans font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-white/10 transition-all text-center flex items-center justify-center gap-4"
+                   >
+                     Contact Us <ArrowRight size={20} />
+                   </Link>
+                </div>
+             </div>
+          </ScrollReveal>
+        </div>
       </div>
-    </div>
+
+      <AdminBar />
+    </CmsProvider>
   );
 }

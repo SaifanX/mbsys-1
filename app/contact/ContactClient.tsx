@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Mail, Loader2, CheckCircle2, Phone, ShieldAlert } from 'lucide-react';
 import ScrollReveal from '../../components/ScrollReveal';
+import { CmsProvider, useCms } from "../../lib/cms";
+import AdminBar from "../../components/AdminBar";
+import EditableText from "../../components/EditableText";
 
 interface FormErrors {
   name?: string;
@@ -11,7 +14,25 @@ interface FormErrors {
   message?: string;
 }
 
-export default function ContactClient() {
+export default function ContactClient({ initialData }: { initialData: any }) {
+  const fallbackData = {
+    address: "JP Nagar, Bengaluru, India",
+    email: "info@mbsys.co.in",
+    phone: "+91 98863 74122",
+    whatsapp: "+919886374122"
+  };
+
+  const finalInitialData = { ...fallbackData, ...(initialData || {}) };
+
+  return (
+    <CmsProvider pageName="contact" initialData={finalInitialData}>
+      <ContactMain />
+    </CmsProvider>
+  );
+}
+
+function ContactMain() {
+  const { draftData } = useCms();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -106,21 +127,21 @@ export default function ContactClient() {
                 <MapPin className="text-secondary w-10 h-10 sm:w-12 sm:h-12" />
                 <div className="text-left">
                   <p className="text-xs uppercase font-bold text-slate-500 font-sans tracking-[0.4em] mb-2">Office Location</p>
-                  <p className="font-display font-bold text-lg sm:text-2xl dark:text-white tracking-wide">JP Nagar, Bengaluru, India</p>
+                  <EditableText path="address" className="font-display font-bold text-lg sm:text-2xl dark:text-white tracking-wide block" />
                 </div>
               </div>
               <div className="flex items-center gap-8 p-8 sm:p-10 glass-panel rounded-2xl border-l-8 border-primary hover:border-secondary transition-all duration-500">
                 <Mail className="text-primary w-10 h-10 sm:w-12 sm:h-12" />
                 <div className="text-left">
                   <p className="text-xs uppercase font-bold text-slate-500 font-sans tracking-[0.4em] mb-2">Email Address</p>
-                  <p className="font-display font-bold text-lg sm:text-2xl dark:text-white tracking-wide">info@mbsys.co.in</p>
+                  <EditableText path="email" className="font-display font-bold text-lg sm:text-2xl dark:text-white tracking-wide block" />
                 </div>
               </div>
               <div className="flex items-center gap-8 p-8 sm:p-10 glass-panel rounded-2xl border-l-8 border-slate-900 dark:border-white hover:border-secondary transition-all duration-500">
                 <Phone className="text-slate-900 dark:text-white w-10 h-10 sm:w-12 sm:h-12" />
                 <div className="text-left">
                   <p className="text-xs uppercase font-bold text-slate-500 font-sans tracking-[0.4em] mb-2">Phone Support</p>
-                  <p className="font-display font-bold text-lg sm:text-2xl dark:text-white tracking-wide">+91 98863 74122</p>
+                  <EditableText path="phone" className="font-display font-bold text-lg sm:text-2xl dark:text-white tracking-wide block" />
                 </div>
               </div>
             </div>
@@ -229,6 +250,8 @@ export default function ContactClient() {
           </ScrollReveal>
         </div>
       </div>
+
+      <AdminBar />
     </div>
   );
 }
