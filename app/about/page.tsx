@@ -1,13 +1,9 @@
 import React from 'react';
-import { Terminal, Cpu, Shield, Globe, Activity, Calendar, ArrowRight } from 'lucide-react';
-import ScrollReveal from '../components/ScrollReveal';
-import SEO from '../components/SEO';
-import { TimelineItem } from '../types';
-
-interface AboutProps {
-  timeline: TimelineItem[];
-  onNavigate: (path: string) => void;
-}
+import Link from 'next/link';
+import { Cpu, Shield, Globe, Activity, Calendar, ArrowRight } from 'lucide-react';
+import ScrollReveal from '../../components/ScrollReveal';
+import { TIMELINE } from '../../constants';
+import { TimelineItem } from '../../types';
 
 interface TimelineCardProps {
   item: TimelineItem;
@@ -18,7 +14,7 @@ const TimelineCard: React.FC<TimelineCardProps> = ({ item, index }) => {
   return (
     <ScrollReveal 
       delay={index * 150} 
-      className={`relative pl-12 pb-12 sm:pb-16`}
+      className="relative pl-12 pb-12 sm:pb-16"
     >
       <div className="absolute left-0 top-0 h-full w-px bg-slate-200 dark:bg-slate-800"></div>
       <div className="absolute left-[-5px] top-3 w-2.5 h-2.5 rounded-full bg-primary shadow-sm"></div>
@@ -38,7 +34,12 @@ const TimelineCard: React.FC<TimelineCardProps> = ({ item, index }) => {
   );
 };
 
-const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
+export const metadata = {
+  title: 'The MBSYS Story | Technical Infrastructure Experts',
+  description: "Established in 2016, MBSYS is Bengaluru's leading partner for professional technical infrastructure, precision engineering, and reliable security solutions.",
+};
+
+export default function AboutPage() {
   const coreValues = [
     { icon: Cpu, title: 'Precision', desc: 'Expert engineering and installation standards for all infrastructure components.' },
     { icon: Shield, title: 'Reliability', desc: 'Durable and secure systems designed for continuous operation.' },
@@ -48,10 +49,6 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
 
   return (
     <div className="pt-32 sm:pt-48 pb-24 bg-background-light dark:bg-background-dark transition-colors overflow-x-hidden">
-      <SEO 
-        title="The MBSYS Story | Technical Infrastructure Experts"
-        description="Established in 2016, MBSYS is Bengaluru's leading partner for professional technical infrastructure, precision engineering, and reliable security solutions."
-      />
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Story Section */}
@@ -61,7 +58,7 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
               <span className="text-xs font-sans font-bold text-primary tracking-[0.4em] uppercase">Company Overview</span>
             </div>
             <h1 className="text-5xl sm:text-7xl md:text-8xl 2xl:text-9xl font-display font-bold text-slate-900 dark:text-white leading-[0.95] tracking-tighter transition-colors">
-              Infrastructure <br/><span className="text-secondary">Excellence.</span>
+              Infrastructure <br/><span className="text-secondary">Excell–ence.</span>
             </h1>
             <p className="text-lg sm:text-2xl text-slate-600 dark:text-slate-400 font-sans leading-relaxed border-l-0 sm:border-l-4 border-slate-200 dark:border-slate-800 sm:pl-10 py-4 transition-colors font-light">
               Headquartered in Bengaluru, MBSYS delivers professional technical solutions by integrating advanced infrastructure with functional design.
@@ -123,7 +120,7 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
             </ScrollReveal>
             <div className="lg:col-span-7">
               <div className="max-w-3xl mx-auto lg:mx-0">
-                {timeline.map((item, i) => (
+                {TIMELINE.map((item, i) => (
                   <TimelineCard key={i} item={item} index={i} />
                 ))}
               </div>
@@ -147,18 +144,16 @@ const About: React.FC<AboutProps> = ({ timeline, onNavigate }) => {
                  >
                    <Calendar size={20} /> Schedule Consultation
                  </a>
-                 <button 
-                   onClick={() => onNavigate('#contact')}
+                 <Link 
+                   href="/contact"
                    className="px-12 py-6 border border-white/20 font-sans font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-white/10 transition-all text-center flex items-center justify-center gap-4"
                  >
                    Contact Us <ArrowRight size={20} />
-                 </button>
+                 </Link>
               </div>
            </div>
         </ScrollReveal>
       </div>
     </div>
   );
-};
-
-export default About;
+}

@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -33,7 +35,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
         y: 0,
         scale: 1,
         transition: {
-          type: "spring",
+          type: "spring" as const,
           damping: 25,
           stiffness: 100,
           duration: 0.8,

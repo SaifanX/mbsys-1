@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useMemo } from 'react';
 import { Calculator, Server, Video, Wifi, ArrowRight, Check, Send } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';

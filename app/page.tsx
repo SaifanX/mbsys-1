@@ -1,30 +1,20 @@
 import React from 'react';
-import { ArrowRight, Zap, CheckCircle, Activity, Globe, ExternalLink, ShieldCheck, Calendar, Award, Users, ShieldAlert } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, Zap, CheckCircle, Activity, Globe, ShieldCheck, Calendar, Award, Users } from 'lucide-react';
 import Counter from '../components/Counter';
 import XRaySlider from '../components/XRaySlider';
 import MbsysLogo from '../components/MbsysLogo';
 import ServiceCalculator from '../components/ServiceCalculator';
 import TestimonialCarousel from '../components/TestimonialCarousel';
 import ScrollReveal from '../components/ScrollReveal';
-import SEO from '../components/SEO';
-import { Service, Testimonial } from '../types';
+import { Testimonial } from '../types';
 
-interface HomeProps {
-  services: Service[];
-  onNavigate: (path: string) => void;
-}
-
-const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
+export default async function Page() {
   const testimonials: Testimonial[] = [
     { id: '1', author: 'Arjun Mehta', role: 'CTO', company: 'Nexus FinTech', quote: "MBSYS designed a robust IT infrastructure that serves as the backbone of our regional headquarters." },
     { id: '2', author: 'Sarah Jenkins', role: 'Operations Director', company: 'CloudCore Labs', quote: "The smart systems significantly improved our operational efficiency and facility management." },
     { id: '3', author: 'Vikram Singh', role: 'Head of Security', company: 'Indigo Retail', quote: "The comprehensive security architecture provided by MBSYS has set a new standard for our outlets." }
   ];
-
-  const handleLinkClick = (e: React.MouseEvent, path: string) => {
-    e.preventDefault();
-    onNavigate(path);
-  };
 
   const differentiators = [
     {
@@ -49,10 +39,7 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
 
   return (
     <div className="bg-background-light dark:bg-background-dark">
-      <SEO 
-        title="Professional IT Infrastructure & Security Bengaluru"
-        description="MBSYS provides premium IT infrastructure, industrial CCTV surveillance, networking solutions, and professional office renovation services in Bengaluru."
-      />
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-28 sm:pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0 tech-grid opacity-30 pointer-events-none"></div>
@@ -84,9 +71,9 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
                 <a href="https://cal.id/mbsys" target="_blank" rel="noopener noreferrer" className="px-10 py-5 bg-primary text-white font-bold uppercase tracking-[0.2em] text-sm rounded-sm shadow-xl flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-300">
                   <Calendar size={20} /> Book Site Audit
                 </a>
-                <a href="/services" onClick={(e) => handleLinkClick(e, '/services')} className="px-10 py-5 bg-white dark:bg-transparent border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-bold uppercase tracking-[0.2em] text-sm rounded-sm flex items-center justify-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300">
+                <Link href="/services" className="px-10 py-5 bg-white dark:bg-transparent border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-bold uppercase tracking-[0.2em] text-sm rounded-sm flex items-center justify-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300">
                   Our Services <ArrowRight size={20} />
-                </a>
+                </Link>
               </ScrollReveal>
             </ScrollReveal>
 
@@ -206,6 +193,4 @@ const Home: React.FC<HomeProps> = ({ services, onNavigate }) => {
       </section>
     </div>
   );
-};
-
-export default Home;
+}

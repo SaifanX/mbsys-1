@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Testimonial } from '../types';

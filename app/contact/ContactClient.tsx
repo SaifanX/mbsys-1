@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { MapPin, Mail, Loader2, CheckCircle2, Phone, Calendar, ShieldAlert } from 'lucide-react';
-import ScrollReveal from '../components/ScrollReveal';
-import SEO from '../components/SEO';
+"use client";
 
-interface ContactProps {
-  onNavigate: (path: string) => void;
-}
+import React, { useState, useEffect } from 'react';
+import { MapPin, Mail, Loader2, CheckCircle2, Phone, ShieldAlert } from 'lucide-react';
+import ScrollReveal from '../../components/ScrollReveal';
 
 interface FormErrors {
   name?: string;
   email?: string;
+  phone?: string;
   message?: string;
 }
 
-const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
+export default function ContactClient() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -93,12 +91,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
 
   return (
     <div className="pt-32 sm:pt-48 pb-24">
-      <SEO 
-        title="Get a Technical Audit | Contact MBSYS"
-        description="Ready to upgrade your infrastructure? Contact Bengaluru's technical experts for a professional site audit, CCTV consultation, or networking quote."
-      />
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
-        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 mb-24 items-start">
           <ScrollReveal className="text-center sm:text-left space-y-10">
             <div>
@@ -238,6 +231,4 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
       </div>
     </div>
   );
-};
-
-export default Contact;
+}

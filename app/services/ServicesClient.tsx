@@ -1,15 +1,13 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, CheckCircle2, X, Calendar, ShieldCheck, Loader2, AlertCircle, MessageSquare, ArrowUpRight } from 'lucide-react';
-import ScrollReveal from '../components/ScrollReveal';
-import SEO from '../components/SEO';
-import { Service } from '../types';
-
-interface ServicesProps {
-  services: Service[];
-  onNavigate: (path: string) => void;
-}
+import { ArrowRight, CheckCircle2, X, AlertCircle, MessageSquare, ArrowUpRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import ScrollReveal from '../../components/ScrollReveal';
+import { SERVICES } from '../../constants';
+import { Service } from '../../types';
 
 const ServiceCard: React.FC<{ service: Service, idx: number, onExpand: (s: Service) => void }> = ({ service, idx, onExpand }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -85,10 +83,16 @@ const ServiceCard: React.FC<{ service: Service, idx: number, onExpand: (s: Servi
   );
 };
 
-const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
+export default function ServicesClient() {
+  const router = useRouter();
   const [expandedService, setExpandedService] = useState<Service | null>(null);
   const [isImgLoaded, setIsImgLoaded] = useState(false);
   const [modalImgError, setModalImgError] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (expandedService) {
@@ -102,16 +106,11 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
 
   const getWhatsAppLink = (title: string) => {
     const message = `Hello MBSYS, I am interested in your ${title} services. Please provide more information.`;
-    return `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/919886374122?text=${encodeURIComponent(message)}`;
   };
 
   return (
     <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-950">
-      <SEO 
-        title="Expert Technical Services | IT, Security & Infrastructure"
-        description="Explore MBSYS's comprehensive technical services in Bengaluru. From IT AMC and network security to CCTV and smart office solutions."
-      />
-
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <ScrollReveal>
           <div className="max-w-3xl mb-20">
@@ -127,7 +126,7 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, idx) => (
+          {SERVICES.map((service, idx) => (
             <ServiceCard 
               key={service.id} 
               service={service} 
@@ -139,7 +138,7 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
       </div>
 
       <AnimatePresence>
-        {expandedService && createPortal(
+        {expandedService && mounted && createPortal(
           <div className="fixed inset-0 z-[100000] flex items-center justify-center p-4 sm:p-8 lg:p-16">
             <motion.div 
               initial={{ opacity: 0 }}
@@ -214,13 +213,13 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
                    <button 
                      onClick={() => {
                        setExpandedService(null);
-                       onNavigate(`/services/${expandedService.slug}`);
+                       router.push(`/services/${expandedService.slug}`);
                      }}
                      className="flex-1 py-5 bg-slate-900 dark:bg-slate-800 text-white font-bold uppercase tracking-[0.4em] text-xs flex items-center justify-center gap-4 rounded-xl hover:bg-primary transition-all"
                    >
                      <ArrowUpRight size={18} /> View Case Study
                    </button>
-                   <a href={getWhatsAppLink(expandedService.title)} target="_blank" className="flex-1 py-5 bg-green-600 text-white font-bold uppercase tracking-[0.3em] text-sm flex items-center justify-center gap-4 rounded-xl">
+                   <a href={getWhatsAppLink(expandedService.title)} target="_blank" rel="noopener noreferrer" className="flex-1 py-5 bg-green-600 text-white font-bold uppercase tracking-[0.3em] text-sm flex items-center justify-center gap-4 rounded-xl text-center">
                     <MessageSquare size={22} /> WhatsApp Inquiry
                    </a>
                 </div>
@@ -232,6 +231,4 @@ const Services: React.FC<ServicesProps> = ({ services, onNavigate }) => {
       </AnimatePresence>
     </div>
   );
-};
-
-export default Services;
+}

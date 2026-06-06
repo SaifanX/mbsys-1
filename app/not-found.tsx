@@ -1,10 +1,13 @@
+"use client";
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Home, ArrowLeft, ShieldAlert } from 'lucide-react';
+import Link from 'next/link';
 
-const NotFound: React.FC = () => {
-  const navigate = useNavigate();
+export default function NotFound() {
+  const router = useRouter();
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden bg-slate-950">
@@ -50,16 +53,16 @@ const NotFound: React.FC = () => {
           transition={{ delay: 0.4 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
-          <button
-            onClick={() => navigate('/')}
+          <Link
+            href="/"
             className="group flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-full font-bold uppercase tracking-widest text-[10px] shadow-2xl hover:shadow-primary/40 hover:-translate-y-1 transition-all active:scale-95"
           >
             <Home className="w-4 h-4" />
             <span>Back to HQ</span>
-          </button>
+          </Link>
           
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => router.back()}
             className="group flex items-center gap-3 px-8 py-4 bg-white/5 text-white border border-white/10 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-white/10 transition-all"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -76,6 +79,4 @@ const NotFound: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default NotFound;
+}

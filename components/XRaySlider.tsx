@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import { MoveHorizontal, Loader2, AlertCircle } from 'lucide-react';
 

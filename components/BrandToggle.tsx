@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { LayoutGrid } from 'lucide-react';
@@ -8,21 +10,9 @@ interface BrandToggleProps {
 }
 
 const BrandToggle: React.FC<BrandToggleProps> = ({ currentBrand, onToggle }) => {
-  const prefetchBrand = () => {
-    const targetUrl = currentBrand === 'mbsys' ? 'http://localhost:5174' : 'http://localhost:3000';
-    const existing = document.querySelector(`link[href="${targetUrl}"]`);
-    if (!existing) {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = targetUrl;
-      document.head.appendChild(link);
-    }
-  };
-
   return (
     <div 
       className="flex items-center bg-slate-100 dark:bg-slate-800/50 p-1 rounded-full border border-slate-200 dark:border-white/5 relative overflow-hidden group"
-      onMouseEnter={prefetchBrand}
     >
       {/* Background Pill */}
       <motion.div

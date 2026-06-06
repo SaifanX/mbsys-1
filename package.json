@@ -4,26 +4,27 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "node node_modules/next/dist/bin/next dev",
+    "build": "node node_modules/next/dist/bin/next build",
+    "start": "node node_modules/next/dist/bin/next start",
+    "lint": "node node_modules/next/dist/bin/next lint",
+    "slicemachine": "start-slicemachine"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.563.0",
+    "next": "^15.1.0",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.14.2"
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@slicemachine/adapter-next": "^0.3.96",
     "@tailwindcss/postcss": "^4.2.4",
     "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
+    "@types/react": "19.2.17",
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.12",
     "tailwindcss": "^4.2.4",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "typescript": "~5.8.2"
   }
 }

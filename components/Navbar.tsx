@@ -1,17 +1,18 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Moon, Sun, Calendar, LayoutGrid } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Menu, X, Phone, Calendar } from 'lucide-react';
 import MbsysLogo from './MbsysLogo';
 import BrandToggle from './BrandToggle';
 
-interface NavbarProps {
-  onNavigate: (path: string) => void;
-  currentPath: string;
-  onSwitchBrand: () => void;
-}
+interface NavbarProps {}
 
-const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPath, onSwitchBrand }) => {
+const Navbar: React.FC<NavbarProps> = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -26,12 +27,6 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPath, onSwitchBrand 
     { name: 'Contact', href: '/contact' },
   ];
 
-  const handleLinkClick = (e: React.MouseEvent, href: string) => {
-    e.preventDefault();
-    setIsDrawerOpen(false);
-    onNavigate(href);
-  };
-
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-[100] flex justify-center pointer-events-none px-4 md:px-8">
@@ -42,28 +37,27 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPath, onSwitchBrand 
               : 'mt-0 px-4 py-6 w-full bg-transparent border-transparent shadow-none'
             }`}
         >
-          <a href="/" onClick={(e) => handleLinkClick(e, '/')} className="flex items-center gap-3 group active:scale-95 transition-transform" aria-label="MBSYS Home">
+          <Link href="/" className="flex items-center gap-3 group active:scale-95 transition-transform" aria-label="MBSYS Home">
             <MbsysLogo className={`transition-all duration-500 ${scrolled ? 'h-10 md:h-12' : 'h-16 md:h-20'}`} />
-          </a>
+          </Link>
 
           <div className="hidden lg:flex items-center space-x-10">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className={`text-[12px] font-bold uppercase tracking-[0.3em] transition-all relative group py-2 h-full flex flex-col justify-center ${currentPath === link.href
+                className={`text-[12px] font-bold uppercase tracking-[0.3em] transition-all relative group py-2 h-full flex flex-col justify-center ${pathname === link.href
                   ? 'text-primary'
                   : 'text-slate-600 dark:text-slate-300'
                   } hover:text-primary`}
               >
                 {link.name}
-                <span className={`absolute bottom-0 left-0 h-[1px] bg-primary transition-all duration-500 ${currentPath === link.href ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'}`}></span>
-              </a>
+                <span className={`absolute bottom-0 left-0 h-[1px] bg-primary transition-all duration-500 ${pathname === link.href ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'}`}></span>
+              </Link>
             ))}
 
             <div className="flex items-center gap-6 pl-10 border-l border-slate-200/50 dark:border-white/10">
-              <BrandToggle currentBrand="mbsys" onToggle={onSwitchBrand} />
+              <BrandToggle currentBrand="mbsys" onToggle={() => window.dispatchEvent(new CustomEvent('switch-brand'))} />
             </div>
 
             <div className={`flex items-center gap-4 ml-6 transition-all duration-500`}>
@@ -111,15 +105,15 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPath, onSwitchBrand 
           <div className="flex-1 overflow-y-auto py-12 px-10">
             <div className="flex flex-col space-y-8">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`text-5xl font-display font-bold uppercase tracking-tight transition-all hover:translate-x-2 duration-300 ${currentPath === link.href ? 'text-primary' : 'text-slate-900 dark:text-slate-100'
+                  onClick={() => setIsDrawerOpen(false)}
+                  className={`text-5xl font-display font-bold uppercase tracking-tight transition-all hover:translate-x-2 duration-300 ${pathname === link.href ? 'text-primary' : 'text-slate-900 dark:text-slate-100'
                     }`}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -127,7 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPath, onSwitchBrand 
               <div className="flex flex-col gap-4">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Switch Experience</span>
                 <div className="flex">
-                  <BrandToggle currentBrand="mbsys" onToggle={onSwitchBrand} />
+                  <BrandToggle currentBrand="mbsys" onToggle={() => window.dispatchEvent(new CustomEvent('switch-brand'))} />
                 </div>
               </div>
 

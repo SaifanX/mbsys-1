@@ -1,44 +1,57 @@
-import React, { useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Phone, Calendar, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
-import ScrollReveal from '../components/ScrollReveal';
-import SEO from '../components/SEO';
-import { Service } from '../types';
+import React from 'react';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { ArrowLeft, CheckCircle2, Phone, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import ScrollReveal from '../../../components/ScrollReveal';
+import { SERVICES } from '../../../constants';
 
-interface ServiceDetailProps {
-  services: Service[];
-  onNavigate: (path: string) => void;
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-const ServiceDetail: React.FC<ServiceDetailProps> = ({ services, onNavigate }) => {
-  const { slug } = useParams<{ slug: string }>();
-  const service = services.find(s => s.slug === slug);
+export async function generateStaticParams() {
+  return SERVICES.map((service) => ({
+    slug: service.slug,
+  }));
+}
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [slug]);
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const service = SERVICES.find(s => s.slug === slug);
+  
+  if (!service) {
+    return {
+      title: 'Service Not Found | MBSYS',
+      description: 'The requested service could not be found.',
+    };
+  }
+
+  return {
+    title: `${service.title} | Technical Expert Bengaluru`,
+    description: service.longDescription,
+  };
+}
+
+export default async function ServiceDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const service = SERVICES.find(s => s.slug === slug);
 
   if (!service) {
-    return <Navigate to="/services" replace />;
+    notFound();
   }
 
   const Icon = service.icon;
 
   return (
     <div className="pt-32 sm:pt-48 pb-24 bg-white dark:bg-slate-900 transition-colors">
-      <SEO 
-        title={`${service.title} | Technical Expert Bengaluru`}
-        description={service.longDescription}
-      />
-      
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12">
         <ScrollReveal className="mb-12">
-          <button 
-            onClick={() => onNavigate('/services')}
+          <Link 
+            href="/services"
             className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-sans font-bold uppercase tracking-widest text-xs"
           >
             <ArrowLeft size={16} /> Back to Services
-          </button>
+          </Link>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -121,18 +134,16 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ services, onNavigate }) =
                  >
                    <Phone size={20} /> Call Engineering
                  </a>
-                 <button 
-                   onClick={() => onNavigate('/contact')}
+                 <Link 
+                   href="/contact"
                    className="px-12 py-6 border border-white/30 font-bold uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-4"
                  >
                    Online Quote <ArrowRight size={20} />
-                 </button>
+                 </Link>
               </div>
            </div>
         </ScrollReveal>
       </div>
     </div>
   );
-};
-
-export default ServiceDetail;
+}
